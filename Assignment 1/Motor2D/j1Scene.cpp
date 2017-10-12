@@ -11,7 +11,7 @@
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.create("Szene");
+	name.create("Test");
 }
 
 // Destructor
