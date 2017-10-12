@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="62" height="23" tilewidth="32" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" source="BG.tsx"/>
- <tileset firstgid="1201" source="Tiles.tsx"/>
- <layer name="Capa de Patrones 1" width="62" height="23">
+ <tileset firstgid="1" name="BG" tilewidth="32" tileheight="32" tilecount="1200" columns="40">
+  <image source="BG.png" width="1280" height="960"/>
+ </tileset>
+ <tileset firstgid="1201" name="Tile" tilewidth="32" tileheight="32" tilecount="1760" columns="40">
+  <image source="Tile.png" width="1298" height="1411"/>
+ </tileset>
+ <layer name="Parallax" width="62" height="23">
   <data>
    <tile gid="1"/>
    <tile gid="2"/>
@@ -1432,7 +1436,7 @@
    <tile gid="911"/>
   </data>
  </layer>
- <layer name="Capa de patrones 2" width="62" height="23">
+ <layer name="Platfroms" width="62" height="23">
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
