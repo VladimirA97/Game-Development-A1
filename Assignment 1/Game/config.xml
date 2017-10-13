@@ -26,4 +26,14 @@
     <folder>maps/</folder>
   </map>
 
+  <player>
+    <folder>maps/</folder>
+    <sprite content="Marion.png"/>
+  </player>
+
+  <scenes>
+    <nameMap name="Mapa1.tmx"></nameMap>
+      <nameMap name="Mapa2.tmx"></nameMap>
+  </scenes>
+  
 </config>

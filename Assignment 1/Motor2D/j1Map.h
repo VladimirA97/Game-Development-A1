@@ -27,7 +27,21 @@ struct MapLayer
 
 };
 	// TODO 6: Short function to get the value of x,y
+struct ObjectsData
+{
+	p2SString	name;
+	int			x;
+	int			y;
+	uint		width;
+	uint		height;
 
+};
+
+struct ObjectsGroup
+{
+	p2SString				name;
+	p2List<ObjectsData*>	objects;
+};
 
 
 // ----------------------------------------------------
@@ -70,6 +84,7 @@ struct MapData
 	p2List<TileSet*>	MapDa_tilesets;
 	// TODO 2: Add a list/array of layers to the map!
 	p2List<MapLayer*> MapDa_layers;
+	p2List<ObjectsGroup*>	ObGr_objects;
 };
 
 // ----------------------------------------------------
@@ -102,12 +117,13 @@ private:
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	// TODO 3: Create a method that loads a single laye
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadObjectLayers(pugi::xml_node & node, ObjectsGroup * group);
 
 public:
 
 	MapData data;
+	bool				is_Map1;
 
 private:
 

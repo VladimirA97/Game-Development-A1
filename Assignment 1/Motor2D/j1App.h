@@ -2,6 +2,7 @@
 #define __j1APP_H__
 
 #include "p2List.h"
+#include "p2DynArray.h"
 #include "j1Module.h"
 #include "PugiXml\src\pugixml.hpp"
 
@@ -12,7 +13,9 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1Scene;
+class j1Colliders;
 class j1Map;
+class j1Player;
 
 class j1App
 {
@@ -82,7 +85,9 @@ public:
 	j1Textures*			tex;
 	j1Audio*			audio;
 	j1Scene*			scene;
+	j1Colliders*		colliders;
 	j1Map*				map;
+	j1Player*			player;
 
 private:
 
