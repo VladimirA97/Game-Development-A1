@@ -12,6 +12,8 @@
 j1Scene::j1Scene() : j1Module()
 {
 	name.create("Test");
+	background_rect.w = 3000;
+	background_rect.h = 750;
 }
 
 // Destructor
@@ -23,7 +25,7 @@ bool j1Scene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
+	
 	return ret;
 }
 
@@ -31,6 +33,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->map->Load("Mapa1.tmx");
+	background_text = App->tex->Load("maps/BG1.png");
 	return true;
 }
 
@@ -62,6 +65,7 @@ bool j1Scene::Update(float dt)
 		App->render->camera.x -= 1;
 
 	//App->render->Blit(img, 0, 0);
+	App->render->Blit(background_text, App->render->camera.x - 500, App->render->camera.y, &background_rect, 0.01f);
 	App->map->Draw();
 
 	// TODO 7: Set the window title like
@@ -72,6 +76,7 @@ bool j1Scene::Update(float dt)
 					App->map->data.MapDa_tilesets.count());
 
 	App->win->SetTitle(title.GetString());
+
 	return true;
 }
 
@@ -90,6 +95,10 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	if (background_text != nullptr)
+	{
+		App->tex->UnLoad(background_text);
+		background_text = nullptr;
+	}
 	return true;
 }
