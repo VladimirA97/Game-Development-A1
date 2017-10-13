@@ -69,39 +69,11 @@ public:
 		return true;
 	}
 
-//public:
-//	bool IsEnabled() const 
-//	{ 
-//		return enabled; 
-//	}
-//
-//	void Enable()
-//	{
-//		if (enabled == false)
-//		{
-//			enabled = true;
-//			Start();
-//		}
-//	}
-//
-//	void Disable()
-//	{
-//		if (enabled == true)
-//		{
-//			enabled = false;
-//			CleanUp();
-//		}
-//	}
-
-	//virtual void OnCollision(Collider*, Collider*) {}
-
 public:
 
 	p2SString	name;
 	bool		active;
 
-private:
-	bool enabled = true;
 };
 
 #endif // __j1MODULE_H__

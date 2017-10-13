@@ -5,22 +5,17 @@
 
 struct SDL_Texture;
 
-enum OurMaps
-{
-	MAP1,
-	MAP2,
-};
-
 class j1Scene : public j1Module
 {
 public:
+
 	j1Scene();
 
 	// Destructor
 	virtual ~j1Scene();
 
 	// Called before render is available
-	bool Awake(pugi::xml_node&);
+	bool Awake();
 
 	// Called before the first frame
 	bool Start();
@@ -37,9 +32,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-public:
-	p2List<p2SString*> str_MapName;
-
+private:
 };
 
 #endif // __j1SCENE_H__

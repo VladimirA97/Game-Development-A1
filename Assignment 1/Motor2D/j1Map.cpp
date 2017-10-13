@@ -63,7 +63,11 @@ void j1Map::Draw()
 			}
 		}
 	}
+
+		// TODO 9: Complete the draw function
+
 }
+
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
@@ -356,29 +360,6 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	{
 		layer->MapLay_tiles[i] = tile.attribute("gid").as_uint();
 		i++;
-	}
-
-	return ret;
-}
-
-
-bool j1Map::LoadObjectLayers(pugi::xml_node & node, ObjectsGroup * group)
-{
-	bool ret = true;
-
-	group->name = node.attribute("name").as_string();
-
-	for (pugi::xml_node& obj = node.child("object"); obj && ret; obj = obj.next_sibling("object"))
-	{
-		ObjectsData* data = new ObjectsData;
-
-		data->height	= obj.attribute("height").as_uint();
-		data->width		= obj.attribute("width").as_uint();
-		data->x			= obj.attribute("x").as_uint();
-		data->y			= obj.attribute("y").as_uint();
-		data->name		= obj.attribute("name").as_string();
-
-		group->objects.add(data);
 	}
 
 	return ret;
