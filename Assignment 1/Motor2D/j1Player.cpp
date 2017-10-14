@@ -70,27 +70,7 @@ j1Player::j1Player()
 	jumpsquatLeft.speed = 0.001f;
 	jumpsquatLeft.loop = false;
 
-	//Animation airborneRight;
-	airborneRight.PushBack({ 0, 64, 53, 64 });
-	airborneRight.PushBack({ 53, 64, 53, 64 });
-	airborneRight.PushBack({ 106, 64, 53, 64 });
-	airborneRight.PushBack({ 159, 64, 53, 64 });
-	airborneRight.PushBack({ 212, 64, 53, 64 });
-	airborneRight.PushBack({ 265, 64, 53, 64 });
-	airborneRight.PushBack({ 318, 64, 53, 64 });
-	airborneRight.speed = 0.001f;
-	airborneRight.loop = false;
-
-	//Animation airborneLeft;
-	airborneLeft.PushBack({ 0, 128, 53, 64 });
-	airborneLeft.PushBack({ 53, 128, 53, 64 });
-	airborneLeft.PushBack({ 106, 128, 53, 64 });
-	airborneLeft.PushBack({ 159, 128, 53, 64 });
-	airborneLeft.PushBack({ 212, 128, 53, 64 });
-	airborneLeft.PushBack({ 265, 128, 53, 64 });
-	airborneLeft.PushBack({ 318, 128, 53, 64 });
-	airborneLeft.speed = 0.001f;
-	airborneLeft.loop = false;
+	
 }
 
 bool j1Player::Awake(pugi::xml_node& config)
@@ -206,13 +186,7 @@ bool j1Player::Update(float dt)
 			if (player->velocity.x >= 0)
 				current_animation = &jumpsquatRight;
 		}
-		else
-		{
-			if (player->velocity.x < 0)
-				current_animation = &airborneLeft;
-			if (player->velocity.x >= 0)
-				current_animation = &airborneRight;
-		}
+		
 	}
 	//blit
 	App->render->Blit(graphics, (int)player->position.x - 35, (int)player->position.y - 25, &(current_animation->GetCurrentFrame()));
