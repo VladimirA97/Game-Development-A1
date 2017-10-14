@@ -8,7 +8,7 @@
 	<Test />
 	<collision />
 	<player>
-		<position x="165.299957" y="585.083984" current_map="0" />
+		<position x="111.069984" y="520.392029" current_map="0" />
 	</player>
 	<:anonymous />
 	<renderer>
