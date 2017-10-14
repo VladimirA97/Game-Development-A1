@@ -100,8 +100,8 @@ bool j1Player::Start()
 	SDL_Rect rect;
 	rect.x = initial_x;
 	rect.y = initial_y;
-	rect.w = width;
-	rect.h = height;
+	rect.w = playerw;
+	rect.h = playerh;
 
 	graphics = App->tex->Load("textures/Player Spritesheet2.png");
 	current_animation = &idle;

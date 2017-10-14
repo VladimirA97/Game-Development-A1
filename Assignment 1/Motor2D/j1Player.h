@@ -54,8 +54,10 @@ public:
 	int lifes = 3;
 	int initial_x = 10;
 	int initial_y = 10;
-	int width = 53;
-	int height = 64;
+	int width = 200;
+	int height = 200;
+	int playerw = 10;
+	int playerh = 33;
 	float jump_speed = -5;
 	float acceleration = 0.1;
 	float max_speed = 1;
