@@ -10,7 +10,7 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
-//struct Collider;
+struct Collider;
 
 class j1Module
 {
@@ -70,7 +70,7 @@ public:
 		return true;
 	}
 
-	/*bool IsEnabled() const { return enabled; }
+	bool IsEnabled() const { return enabled; }
 
 	void Enable()
 	{
@@ -85,14 +85,14 @@ public:
 	}
 
 	virtual void OnCollision(Collider*, Collider*) {};
-*/
+
 public:
 
 	p2SString	name;
 	bool		active;
 
 private:
-	/*bool enabled = true;*/
+	bool enabled = true;
 };
 
 #endif // __j1MODULE_H__

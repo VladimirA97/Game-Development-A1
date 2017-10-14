@@ -24,6 +24,22 @@
 
   <map>
     <folder>maps/</folder>
+    <initial_map value ="0"/>
+    <background r ="0" g="0" b="0"/>
+    <map directory ="BondacheMap1.tmx"/>
+    <map directory ="BondacheMap2.tmx"/>
   </map>
 
+  <player>
+    <size width="45" height="110"/>
+    <lifes numLifes="3"/>
+    <acceleration jump="1.95" horizontal="0.03"/>
+    <velocity max="0.9"/>
+    <gravity value="0.014"/>
+  </player>
+
+  <collision>
+    <debug value ="false"/>
+  </collision>
+  
 </config>

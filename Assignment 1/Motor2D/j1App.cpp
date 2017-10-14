@@ -11,6 +11,9 @@
 #include "j1Scene.h"
 #include "j1Map.h"
 #include "j1App.h"
+#include "j1Player.h"
+#include "j1Collision.h"
+#include "j1Physics.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -26,6 +29,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	map = new j1Map();
 
+	player = new j1Player();
+	collision = new j1Collision();
+	physics = new j1Physics();
+
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -35,6 +42,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(scene);
 
+	AddModule(collision);
+	AddModule(player);
+	AddModule(physics);
 	// render last to swap buffer
 	AddModule(render);
 }
@@ -79,6 +89,8 @@ bool j1App::Awake()
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
 	}
+	save_game = "save_game.xml";
+	load_game = "save_game.xml";
 
 	if(ret == true)
 	{

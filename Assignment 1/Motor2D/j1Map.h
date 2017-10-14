@@ -5,74 +5,73 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "SDL/include/SDL.h"
 
 // TODO 1: Create a struct for the map layer
 // ----------------------------------------------------
-struct MapLayer
+struct map_layer
 {
-	p2SString MapLay_name;
-	int MapLay_width;
-	int MapLay_height;
-	uint* MapLay_tiles = nullptr;
-	int MapLay_size;
-	inline uint MapLay_Get(int x, int y) const
+	p2SString name;
+	uint* data = nullptr;
+	uint size = 0;
+	uint width = 0;
+	uint height = 0;
+	bool logic_layer = false;
+	float parallax = 0.0;
+	inline uint Get(int x, int y)const
 	{
-		return (x + y * MapLay_width);
-	}
+		return y*width + x;
+	};
 
-	~MapLayer()
+	~map_layer()
 	{
-		RELEASE(MapLay_tiles);
+		RELEASE_ARRAY(data);
 	}
 
 };
-	// TODO 6: Short function to get the value of x,y
 
-
-
-// ----------------------------------------------------
 struct TileSet
 {
 	// TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
-	SDL_Rect TileSet_GetTileRect(int id) const;
+	SDL_Rect GetTileRect(int id) const;
 
-	p2SString			TileSet_name;
-	int					TileSet_firstgid;
-	int					TileSet_margin;
-	int					TileSet_spacing;
-	int					TileSet_tile_width;
-	int					TileSet_tile_height;
-	SDL_Texture*		TileSet_texture;
-	int					TileSet_tex_width;
-	int					TileSet_tex_height;
-	int					TileSet_num_tiles_width;
-	int					TileSet_num_tiles_height;
-	int					TileSet_offset_x;
-	int					TileSet_offset_y;
+	p2SString			name;
+	int					firstgid;
+	int					margin;
+	int					spacing;
+	int					tile_width;
+	int					tile_height;
+	SDL_Texture*		texture;
+	int					tex_width;
+	int					tex_height;
+	int					num_tiles_width;
+	int					num_tiles_height;
+	int					offset_x;
+	int					offset_y;
 };
 
 enum MapTypes
 {
-	UNKNOWN_MAP = 0,
-	ORTHOGONAL_MAP,
-	ISOMETRIC_MAP,
-	STAGGERED_MAP
-};
-// ----------------------------------------------------
-struct MapData
-{
-	int					MapDa_width;
-	int					MapDa_height;
-	int					MapDa_tile_width;
-	int					MapDa_tile_height;
-	SDL_Color			MapDa_background_color;
-	MapTypes			MapDa_type;
-	p2List<TileSet*>	MapDa_tilesets;
-	// TODO 2: Add a list/array of layers to the map!
-	p2List<MapLayer*> MapDa_layers;
+	MAPTYPE_UNKNOWN = 0,
+	MAPTYPE_ORTHOGONAL,
+	MAPTYPE_ISOMETRIC,
+	MAPTYPE_STAGGERED
 };
 
-// ----------------------------------------------------
+struct MapData
+{
+	int					width;
+	int					height;
+	int					tile_width;
+	int					tile_height;
+	SDL_Color			background_color;
+	MapTypes			type;
+	p2List<TileSet*>	tilesets;
+	//Add a list of layers to the map
+	p2List<map_layer*> layers;
+	Collider* colliders[500];
+};
+
 class j1Map : public j1Module
 {
 public:
@@ -103,11 +102,18 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	// TODO 3: Create a method that loads a single laye
-	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+	bool LoadLayer(pugi::xml_node& node, map_layer* layer);
+
+	bool CreateColliders(map_layer* layer);
 
 public:
-
 	MapData data;
+	p2List<p2SString>  maps;
+	p2SString current_map;
+	uint index_map = 0;
+
+	void change_map(uint index);
+	void next_level();
 
 private:
 
