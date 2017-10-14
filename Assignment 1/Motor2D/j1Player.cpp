@@ -16,79 +16,79 @@ j1Player::j1Player()
 {
 	name.create("player");
 	//Animation idle;
-	idle.PushBack({ 0, 0, 113, 138 });
-	idle.PushBack({ 113, 0, 113, 138 });
-	idle.PushBack({ 226, 0, 113, 138 });
-	idle.PushBack({ 339, 0, 113, 138 });
-	idle.PushBack({ 452, 0, 113, 138 });
-	idle.PushBack({ 565, 0, 113, 138 });
-	idle.PushBack({ 678, 0, 113, 138 });
+	idle.PushBack({ 0, 0, 53, 64 });
+	idle.PushBack({ 53, 0, 53, 64 });
+	idle.PushBack({ 106, 0, 53, 64 });
+	idle.PushBack({ 159, 0, 53, 64 });
+	idle.PushBack({ 212, 0, 53, 64 });
+	idle.PushBack({ 265, 0, 53, 64 });
+	idle.PushBack({ 318, 0, 53, 64 });
 	idle.speed = 0.02f;
 	idle.loop = true;
 
 	//Animation right
-	right.PushBack({ 0, 552, 113, 138 });
-	right.PushBack({ 113, 552, 113, 138 });
-	right.PushBack({ 226, 552, 113, 138 });
-	right.PushBack({ 339, 552, 113, 138 });
-	right.PushBack({ 452, 552, 113, 138 });
-	right.PushBack({ 565, 552, 113, 138 });
-	right.PushBack({ 678, 552, 113, 138 });
+	right.PushBack({ 0, 192, 53, 64 });
+	right.PushBack({ 53, 192, 53, 64 });
+	right.PushBack({ 106, 192, 53, 64 });
+	right.PushBack({ 159, 192, 53, 64 });
+	right.PushBack({ 212, 192, 53, 64 });
+	right.PushBack({ 265, 192, 53, 64 });
+	right.PushBack({ 318, 192, 53, 64 });
 	right.speed = 0.02f;
 	right.loop = true;
 
 	//Animation left
-	left.PushBack({ 0, 414, 113, 138 });
-	left.PushBack({ 113, 414, 113, 138 });
-	left.PushBack({ 226, 414, 113, 138 });
-	left.PushBack({ 339, 414, 113, 138 });
-	left.PushBack({ 452, 414, 113, 138 });
-	left.PushBack({ 565, 414, 113, 138 });
-	left.PushBack({ 678, 414, 113, 138 });
+	left.PushBack({ 0, 256, 53, 64 });
+	left.PushBack({ 53, 256, 53, 64 });
+	left.PushBack({ 106, 256, 53, 64 });
+	left.PushBack({ 159, 256, 53, 64 });
+	left.PushBack({ 212, 256, 53, 64 });
+	left.PushBack({ 265, 256, 53, 64 });
+	left.PushBack({ 318, 256, 53, 64 });
 	left.speed = 0.02f;
 	left.loop = true;
 
 	//Animation jumpsquatRight;
-	jumpsquatRight.PushBack({ 0, 138, 113, 138 });
-	jumpsquatRight.PushBack({ 113, 138, 113, 138 });
-	jumpsquatRight.PushBack({ 226, 138, 113, 138 });
-	jumpsquatRight.PushBack({ 339, 138, 113, 138 });
-	jumpsquatRight.PushBack({ 452, 138, 113, 138 });
-	jumpsquatRight.PushBack({ 565, 138, 113, 138 });
-	jumpsquatRight.PushBack({ 678, 138, 113, 138 });
+	jumpsquatRight.PushBack({ 0, 64, 53, 64 });
+	jumpsquatRight.PushBack({ 53, 64, 53, 64 });
+	jumpsquatRight.PushBack({ 106, 64, 53, 64 });
+	jumpsquatRight.PushBack({ 159, 64, 53, 64 });
+	jumpsquatRight.PushBack({ 212, 64, 53, 64 });
+	jumpsquatRight.PushBack({ 265, 64, 53, 64 });
+	jumpsquatRight.PushBack({ 318, 64, 53, 64 });
 	jumpsquatRight.speed = 0.001f;
 	jumpsquatRight.loop = false;
 
 	//Animation jumpsquatLeft;
-	jumpsquatLeft.PushBack({ 0, 276, 113, 138 });
-	jumpsquatLeft.PushBack({ 113, 276, 113, 138 });
-	jumpsquatLeft.PushBack({ 226, 276, 113, 138 });
-	jumpsquatLeft.PushBack({ 339, 276, 113, 138 });
-	jumpsquatLeft.PushBack({ 452, 276, 113, 138 });
-	jumpsquatLeft.PushBack({ 565, 276, 113, 138 });
-	jumpsquatLeft.PushBack({ 678, 276, 113, 138 });
+	jumpsquatLeft.PushBack({ 0, 192, 53, 64 });
+	jumpsquatLeft.PushBack({ 53, 192, 53, 64 });
+	jumpsquatLeft.PushBack({ 106, 192, 53, 64 });
+	jumpsquatLeft.PushBack({ 159, 192, 53, 64 });
+	jumpsquatLeft.PushBack({ 212, 192, 53, 64 });
+	jumpsquatLeft.PushBack({ 265, 192, 53, 64 });
+	jumpsquatLeft.PushBack({ 318, 192, 53, 64 });
 	jumpsquatLeft.speed = 0.001f;
 	jumpsquatLeft.loop = false;
 
 	//Animation airborneRight;
-	airborneRight.PushBack({ 0, 138, 113, 138 });
-	airborneRight.PushBack({ 113, 138, 113, 138 });
-	airborneRight.PushBack({ 226, 138, 113, 138 });
-	airborneRight.PushBack({ 339, 138, 113, 138 });
-	airborneRight.PushBack({ 452, 138, 113, 138 });
-	airborneRight.PushBack({ 565, 138, 113, 138 });
-	airborneRight.PushBack({ 678, 138, 113, 138 });
+	airborneRight.PushBack({ 0, 64, 53, 64 });
+	airborneRight.PushBack({ 53, 64, 53, 64 });
+	airborneRight.PushBack({ 106, 64, 53, 64 });
+	airborneRight.PushBack({ 159, 64, 53, 64 });
+	airborneRight.PushBack({ 212, 64, 53, 64 });
+	airborneRight.PushBack({ 265, 64, 53, 64 });
+	airborneRight.PushBack({ 318, 64, 53, 64 });
 	airborneRight.speed = 0.001f;
 	airborneRight.loop = false;
 
 	//Animation airborneLeft;
-	airborneLeft.PushBack({ 0, 276, 113, 138 });
-	airborneLeft.PushBack({ 113, 276, 113, 138 });
-	airborneLeft.PushBack({ 226, 276, 113, 138 });
-	airborneLeft.PushBack({ 339, 276, 113, 138 });
-	airborneLeft.PushBack({ 452, 276, 113, 138 });
-	airborneLeft.PushBack({ 565, 276, 113, 138 });
-	airborneLeft.PushBack({ 678, 276, 113, 138 });
+	airborneLeft.PushBack({ 0, 128, 53, 64 });
+	airborneLeft.PushBack({ 53, 128, 53, 64 });
+	airborneLeft.PushBack({ 106, 128, 53, 64 });
+	airborneLeft.PushBack({ 159, 128, 53, 64 });
+	airborneLeft.PushBack({ 212, 128, 53, 64 });
+	airborneLeft.PushBack({ 265, 128, 53, 64 });
+	airborneLeft.PushBack({ 318, 128, 53, 64 });
 	airborneLeft.speed = 0.001f;
 	airborneLeft.loop = false;
 }
@@ -123,7 +123,7 @@ bool j1Player::Start()
 	rect.w = width;
 	rect.h = height;
 
-	graphics = App->tex->Load("textures/Player Spritesheet.png");
+	graphics = App->tex->Load("textures/Player Spritesheet2.png");
 	current_animation = &idle;
 	player = App->physics->Addobject(initial_x, initial_y, gravity, &rect, COLLIDER_PLAYER, this);
 	return true;
@@ -150,12 +150,12 @@ bool j1Player::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <max_speed)
 	{
 		player->acceleration.x = acceleration;
-		current_animation = &left;
+		current_animation = &right;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x >-max_speed)
 	{
 		player->acceleration.x = -acceleration;
-		current_animation = &right;
+		current_animation = &left;
 	}
 	if (player->velocity.x > max_speed || player->velocity.x < -max_speed)
 	{
