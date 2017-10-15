@@ -5,12 +5,11 @@
 #include "Animation.h"
 #include "p2Point.h"
 
-struct object;
+struct Body;
 struct SDL_Texture;
 struct Collider;
 
-class j1Player :
-	public j1Module
+class j1Player : public j1Module
 {
 public:
 	j1Player();
@@ -59,6 +58,6 @@ public:
 	float velocity = 0.5;
 	float gravity = 0.01;
 
-	object* player;
+	Body* player;
 };
 #endif

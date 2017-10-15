@@ -4,9 +4,9 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Map.h"
-#include "j1Collision.h"
+#include "j1Colliders.h"
 #include "j1Player.h"
-#include "j1Physics.h"
+#include "j1Movement.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -43,7 +43,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	pugi::xml_node colors = config.child("background");
 	data.background_color = { (Uint8)colors.attribute("r").as_uint(), (Uint8)colors.attribute("g").as_uint(), (Uint8)colors.attribute("b").as_uint(), 0 };
-	App->render->SetBackgroundColor(data.background_color);
+	App->MRender->SetBackgroundColor(data.background_color);
 	return ret;
 }
 
@@ -64,9 +64,9 @@ void j1Map::Draw()
 				for (int _x = 0; _x < item->data->width; ++_x)
 				{
 					iPoint point = MapToWorld(_x, _y);
-					App->render->Blit(
+					App->MRender->Blit(
 						data.tilesets.start->data->texture,
-						point.x - App->render->camera.x * item->data->parallax, point.y,
+						point.x - App->MRender->camera.x * item->data->parallax, point.y,
 						&data.tilesets.start->data->GetTileRect(item->data->data[item->data->Get(_x, _y)]));
 				}
 			}
@@ -123,7 +123,7 @@ bool j1Map::CleanUp()
 	}
 	data.layers.clear();
 
-	for (int i = 0; i < 250; ++i)
+	for (int i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (data.colliders[i] != nullptr)
 		{
@@ -329,7 +329,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	}
 	else
 	{
-		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+		set->texture = App->MTextures->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
 		int w, h;
 		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
 		set->tex_width = image.attribute("width").as_int();
@@ -395,8 +395,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, map_layer* layer)
 bool j1Map::CreateColliders(map_layer* layer)
 {
 	int j = 0;
-	data.colliders[j] = App->collision->AddCollider({ -33,0,35,(int)layer->height * 35 }, COLLIDER_WALL); ++j;
-	data.colliders[j] = App->collision->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); ++j;
+	data.colliders[j] = App->Colliders->AddCollider({ -33,0,35,(int)layer->height * 35 }, COLLIDER_WALL); ++j;
+	data.colliders[j] = App->Colliders->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); ++j;
 	for (int _y = 0; _y < layer->height; ++_y)
 	{
 		for (int _x = 0; _x < layer->width; ++_x)
@@ -411,25 +411,25 @@ bool j1Map::CreateColliders(map_layer* layer)
 
 			switch (layer->data[i])
 			{
-			/*case 32:
+			case 32:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->collision->AddCollider(rect, COLLIDER_NEXT_LEVEL);
+					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_FORWARD);
 				j++;
-				break;*/
+				break;
 			case 8:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->collision->AddCollider(rect, COLLIDER_WALL);
+					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_WALL);
 				j++;
 				break;
 
 			case 24:
-				App->player->original_x = point.x;
-				App->player->original_y = point.y;
+				App->MPlayer->original_x = point.x;
+				App->MPlayer->original_y = point.y;
 				break;
 
 			case 16:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->collision->AddCollider(rect, COLLIDER_WATER);
+					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_WATER);
 				j++;
 				break;
 
@@ -447,13 +447,13 @@ void j1Map::change_map(uint map)
 	index_map = map;
 	CleanUp();
 	Load(maps[index_map].GetString());
-	App->player->SetPosOrigin();
+	App->MPlayer->SetPosOrigin();
 }
 
-//void j1Map::next_level()
-//{
-//	index_map = 1;
-//	CleanUp();
-//	Load(maps[index_map].GetString());
-//	App->player->SetPosOrigin();
-//}
+void j1Map::next_level()
+{
+	index_map = 1;
+	CleanUp();
+	Load(maps[index_map].GetString());
+	App->MPlayer->SetPosOrigin();
+}

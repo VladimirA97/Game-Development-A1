@@ -12,8 +12,8 @@
 #include "j1Map.h"
 #include "j1App.h"
 #include "j1Player.h"
-#include "j1Collision.h"
-#include "j1Physics.h"
+#include "j1Colliders.h"
+#include "j1Movement.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -21,32 +21,28 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	frames = 0;
 	want_to_save = want_to_load = false;
 
-	input = new j1Input();
-	win = new j1Window();
-	render = new j1Render();
-	tex = new j1Textures();
-	audio = new j1Audio();
-	scene = new j1Scene();
-	map = new j1Map();
+	MInput = new j1Input();
+	MWindow = new j1Window();
+	MRender = new j1Render();
+	MTextures = new j1Textures();
+	MAudio = new j1Audio();
+	MScene = new j1Scene();
+	MMap = new j1Map();
 
-	player = new j1Player();
-	collision = new j1Collision();
-	physics = new j1Physics();
+	MPlayer = new j1Player();
+	Colliders = new j1Colliders();
+	MMovement = new j1Movement();
 
-	// Ordered for awake / Start / Update
-	// Reverse order of CleanUp
-	AddModule(input);
-	AddModule(win);
-	AddModule(tex);
-	AddModule(audio);
-	AddModule(map);
-	AddModule(scene);
-
-	AddModule(collision);
-	AddModule(player);
-	AddModule(physics);
-	// render last to swap buffer
-	AddModule(render);
+	AddModule(MInput);
+	AddModule(MWindow);
+	AddModule(MTextures);
+	AddModule(MAudio);
+	AddModule(MMap);
+	AddModule(MScene);
+	AddModule(Colliders);
+	AddModule(MPlayer);
+	AddModule(MMovement);
+	AddModule(MRender);
 }
 
 // Destructor
@@ -129,7 +125,7 @@ bool j1App::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true)
+	if(MInput->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
 	if(ret == true)

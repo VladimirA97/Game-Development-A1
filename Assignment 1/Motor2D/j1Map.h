@@ -112,8 +112,8 @@ public:
 	uint index_map = 0;
 
 	void change_map(uint index);
-	/*void next_level();
-*/
+	void next_level();
+
 private:
 
 	pugi::xml_document	map_file;

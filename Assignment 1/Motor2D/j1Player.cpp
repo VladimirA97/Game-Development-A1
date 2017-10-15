@@ -3,11 +3,11 @@
 #include "j1Textures.h"
 #include "j1Input.h"
 #include "j1Render.h"
-#include "j1Collision.h"
+#include "j1Colliders.h"
 #include "j1Map.h"
 #include "j1Player.h"
 #include "j1Audio.h"
-#include "j1Physics.h"
+#include "j1Movement.h"
 #include "SDL/include/SDL_timer.h"
 
 #include <stdio.h>
@@ -15,6 +15,7 @@
 j1Player::j1Player()
 {
 	name.create("player");
+
 	//Animation idle;
 	idle.PushBack({ 0, 0, 53, 64 });
 	idle.PushBack({ 53, 0, 53, 64 });
@@ -101,9 +102,9 @@ bool j1Player::Start()
 	rect.w = clld_width;
 	rect.h = clld_height;
 
-	player_graphics = App->tex->Load("textures/Player Spritesheet2.png");
+	player_graphics = App->MTextures->Load("textures/Player Spritesheet2.png");
 	current_animation = &idle;
-	player = App->physics->Addobject(original_x, original_y, gravity, &rect, COLLIDER_PLAYER, this);
+	player = App->MMovement->AddBody(original_x, original_y, gravity, &rect, COLLIDER_PLAYER, this);
 	return true;
 }
 
@@ -111,7 +112,7 @@ bool j1Player::Start()
 bool j1Player::CleanUp()
 {
 	LOG("Unloading player");
-	App->tex->UnLoad(player_graphics);
+	App->MTextures->UnLoad(player_graphics);
 
 	return true;
 }
@@ -125,12 +126,12 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 	//CONTROLS
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <velocity)
+	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <velocity)
 	{
 		player->acceleration.x = acceleration;
 		current_animation = &run_right;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x >-velocity)
+	if (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x >-velocity)
 	{
 		player->acceleration.x = -acceleration;
 		current_animation = &run_left;
@@ -140,77 +141,78 @@ bool j1Player::Update(float dt)
 		player->acceleration.x = 0;
 	}
 
-	if ((App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-		&& (App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
+	if ((App->MInput->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+		&& (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
 	{
 		current_animation = &idle;
 		player->acceleration.x = -player->velocity.x;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
-		&& App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
+		&& App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		current_animation = &idle;
 		player->acceleration.x = -player->velocity.x;
 		player->velocity.x = 0;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && player->grounded && player->velocity.y < 0.5)
+	if (App->MInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN && player->is_touching && player->velocity.y < 0.5)
 	{
 		current_animation = &jump_right;
 		player->velocity.y = -jump_speed;
-		player->grounded = false;
+		player->is_touching = false;
 	}
 
-	//if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	//{
+	if (App->MInput->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
 
-	//		player->velocity.y -= -1.0; //stack to the floor
-	//}
+		player->velocity.y -= -1.0; //stack to the floor
+	}
 
-	////F1: Go to Map 1
-	//if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	//{
-	//	App->map->change_map(0);
-	//}
+	//F1: Go to Map 1
+	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		App->MMap->change_map(0);
+	}
 
-	////F1: Go to Map 2
-	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	//{
-	//	App->map->change_map(1);
-	//}
+	//F1: Go to Map 2
+	if (App->MInput->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		App->MMap->change_map(1);
+	}
 
 	//F2: Reset current Map 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	if (App->MInput->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		SetPosOrigin();
 	}
 
-	////aereal animations
-	//if (player->grounded == false)
-	//{
-	//	if (player->velocity.y < 0)
-	//	{
-	//		if (player->velocity.x < 0)
-	//			current_animation = &jump_left;
-	//		if (player->velocity.x > 0)
-	//			current_animation = &jump_right;
-	//	}
-	//}
+	//aereal animations
+	if (player->is_touching == false)
+	{
+		if (player->velocity.y < 0)
+		{
+			if (player->velocity.x < 0)
+				current_animation = &jump_left;
+			if (player->velocity.x > 0)
+				current_animation = &jump_right;
+		}
+	}
 
 	//blit
-	App->render->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
+	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
 }
 
+
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	/*if (c1->type == COLLIDER_PLAYER &&c2->type == COLLIDER_NEXT_LEVEL)
+	if (c1->clld_type == COLLIDER_PLAYER &&c2->clld_type == COLLIDER_FORWARD)
 	{
-		App->map->next_level();
-	}*/
+		App->MMap->next_level();
+	}
 
-	if (c1->type == COLLIDER_PLAYER &&c2->type == COLLIDER_WATER)
+	if (c1->clld_type == COLLIDER_PLAYER &&c2->clld_type == COLLIDER_WATER)
 	{
 		SetPosOrigin();
 	}
@@ -222,14 +224,14 @@ bool j1Player::Save(pugi::xml_node& node) const
 
 	pos.append_attribute("x") = player->position.x;
 	pos.append_attribute("y") = player->position.y;
-	pos.append_attribute("current_map") = App->map->index_map;
+	pos.append_attribute("current_map") = App->MMap->index_map;
 
 	return true;
 }
 
 bool j1Player::Load(pugi::xml_node& node)
 {
-	App->map->change_map(node.child("position").attribute("current_map").as_uint());
+	App->MMap->change_map(node.child("position").attribute("current_map").as_uint());
 	player->position.x = node.child("position").attribute("x").as_int();
 	player->position.y = node.child("position").attribute("y").as_int();
 	player->velocity.x = 0;
