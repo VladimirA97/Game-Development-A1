@@ -140,4 +140,9 @@
       <Filter>Desenvolupament  ========\XML files</Filter>
     </Xml>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Game\Licence.txt">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
