@@ -70,16 +70,16 @@ bool j1Scene::Update(float dt)
 	if (App->MInput->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 
-	if (App->MInput->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->MRender->camera.y += 1;
+	//if (App->MInput->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	//	App->MRender->camera.y += 1;
 
-	if (App->MInput->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->MRender->camera.y -= 1;
+	//if (App->MInput->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	//	App->MRender->camera.y -= 1;
 	
 	App->MRender->Blit(background_text, App->MRender->camera.x - 500, App->MRender->camera.y, &background_rect, 0.01f);
 	App->MMap->Draw();
 
-	p2SString title("Escape!");
+	p2SString title("Escape");
 	App->MWindow->SetTitle(title.GetString());
 
 	return true;

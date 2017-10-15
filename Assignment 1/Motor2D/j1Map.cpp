@@ -125,7 +125,7 @@ bool j1Map::CleanUp()
 	{
 		if (data.colliders[i] != nullptr)
 		{
-			data.colliders[i]->to_delete = true;
+			//data.colliders[i]->to_delete = true;
 			data.colliders[i] = nullptr;
 		}
 	}

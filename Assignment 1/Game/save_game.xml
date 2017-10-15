@@ -8,10 +8,10 @@
 	<Test />
 	<Colliders />
 	<player>
-		<position x="269.344177" y="465.022522" current_map="0" />
+		<position x="1555" y="605.75" current_map="0" />
 	</player>
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="0" />
+		<camera x="-1033" y="0" />
 	</renderer>
 </game_state>
