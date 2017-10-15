@@ -161,23 +161,23 @@ bool j1Player::Update(float dt)
 		player->grounded = false;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
+	//if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	//{
 
-			player->velocity.y -= -1.0; //stack to the floor
-	}
+	//		player->velocity.y -= -1.0; //stack to the floor
+	//}
 
-	//F1: Go to Map 1
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		App->map->change_map(0);
-	}
+	////F1: Go to Map 1
+	//if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	//{
+	//	App->map->change_map(0);
+	//}
 
-	//F1: Go to Map 2
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		App->map->change_map(1);
-	}
+	////F1: Go to Map 2
+	//if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	//{
+	//	App->map->change_map(1);
+	//}
 
 	//F2: Reset current Map 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -185,17 +185,17 @@ bool j1Player::Update(float dt)
 		SetPosOrigin();
 	}
 
-	//aereal animations
-	if (player->grounded == false)
-	{
-		if (player->velocity.y < 0)
-		{
-			if (player->velocity.x < 0)
-				current_animation = &jump_left;
-			if (player->velocity.x > 0)
-				current_animation = &jump_right;
-		}
-	}
+	////aereal animations
+	//if (player->grounded == false)
+	//{
+	//	if (player->velocity.y < 0)
+	//	{
+	//		if (player->velocity.x < 0)
+	//			current_animation = &jump_left;
+	//		if (player->velocity.x > 0)
+	//			current_animation = &jump_right;
+	//	}
+	//}
 
 	//blit
 	App->render->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
@@ -205,10 +205,10 @@ bool j1Player::Update(float dt)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1->type == COLLIDER_PLAYER &&c2->type == COLLIDER_NEXT_LEVEL)
+	/*if (c1->type == COLLIDER_PLAYER &&c2->type == COLLIDER_NEXT_LEVEL)
 	{
 		App->map->next_level();
-	}
+	}*/
 
 	if (c1->type == COLLIDER_PLAYER &&c2->type == COLLIDER_WATER)
 	{

@@ -52,39 +52,6 @@ void j1Map::Draw()
 	if(map_loaded == false)
 		return;
 
-	// TODO 5: Prepare the loop to draw all tilesets + Blit
-	/*p2List_item<MapLayer*>* item = nullptr;
-	MapLayer* layer = nullptr;
-	uint tile_id;
-	p2List_item<TileSet*>* tileSet = nullptr;
-	for (item = data.MapDa_layers.start; item; item = item->next)
-	{
-		layer = item->data;
-		
-		for (int j = 0; j < data.MapDa_height; j++)
-		{
-			for (int i = 0; i < data.MapDa_width; i++)
-			{
-				tile_id = layer->MapLay_tiles[layer->MapLay_Get(i, j)];
-				if (tile_id != 0)
-				{
-					for (tileSet = data.MapDa_tilesets.start; tileSet; tileSet = tileSet->next)
-					{
-						if (tile_id >= tileSet->data->TileSet_firstgid && ((!tileSet->next) || (tileSet->next && tile_id < tileSet->next->data->TileSet_firstgid)))
-						{
-							break;
-						}
-					}
-					
-					SDL_Texture* texture = tileSet->data->TileSet_texture;
-					iPoint position = MapToWorld(i, j);
-					SDL_Rect* section = &tileSet->data->TileSet_GetTileRect(tile_id);
-					App->render->Blit(texture, position.x, position.y, section);
-				}
-			}
-		}
-	}*/
-
 	p2List_item<map_layer*>* item = nullptr;
 	item = data.layers.start;
 
@@ -483,10 +450,10 @@ void j1Map::change_map(uint map)
 	App->player->SetPosOrigin();
 }
 
-void j1Map::next_level()
-{
-	index_map = 1;
-	CleanUp();
-	Load(maps[index_map].GetString());
-	App->player->SetPosOrigin();
-}
+//void j1Map::next_level()
+//{
+//	index_map = 1;
+//	CleanUp();
+//	Load(maps[index_map].GetString());
+//	App->player->SetPosOrigin();
+//}
