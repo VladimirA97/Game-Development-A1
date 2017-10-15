@@ -138,24 +138,24 @@ void j1Collision::DebugDraw()
 
 		switch (colliders[i]->type)
 		{
-		case COLLIDER_NONE: // white
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+		//case COLLIDER_NONE: // white
+		//	App->render->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha);
+		//	break;
+		case COLLIDER_WALL: // green
+			App->render->DrawQuad(colliders[i]->rect, 0,255, 0, alpha);
 			break;
-		case COLLIDER_WALL: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-		case COLLIDER_PLAYER: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
-			break;
-		case COLLIDER_WATER: // red
+		case COLLIDER_PLAYER: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-		case COLLIDER_FUTURE: // yellow
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+		case COLLIDER_WATER: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
-		case COLLIDER_NEXT_LEVEL:
+		//case COLLIDER_FUTURE: // yellow
+		//	App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+		//	break;
+		/*case COLLIDER_NEXT_LEVEL:
 			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
-			break;
+			break;*/
 		}
 	}
 }

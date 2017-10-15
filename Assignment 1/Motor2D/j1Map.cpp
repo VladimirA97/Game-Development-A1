@@ -411,11 +411,11 @@ bool j1Map::CreateColliders(map_layer* layer)
 
 			switch (layer->data[i])
 			{
-			case 32:
+			/*case 32:
 				if (data.colliders[j] == nullptr)
 					data.colliders[j] = App->collision->AddCollider(rect, COLLIDER_NEXT_LEVEL);
 				j++;
-				break;
+				break;*/
 			case 8:
 				if (data.colliders[j] == nullptr)
 					data.colliders[j] = App->collision->AddCollider(rect, COLLIDER_WALL);
