@@ -26,7 +26,7 @@
     <path>maps/</path>
     <first_map value ="0"/>
     <background r ="0" g="0" b="0"/>
-    <map directory ="Map 1.tmx"/>
+    <map directory ="Map 3.tmx"/>
   </map>
 
   <player>
