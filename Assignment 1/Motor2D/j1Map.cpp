@@ -485,8 +485,8 @@ void j1Map::change_map(uint map)
 
 void j1Map::next_level()
 {
-	
+	index_map = 1;
 	CleanUp();
-	App->map->Load(App->map->current_map.GetString()+1);
+	Load(maps[index_map].GetString());
 	App->player->SetPosOrigin();
 }

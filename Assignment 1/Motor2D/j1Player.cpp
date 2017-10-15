@@ -173,6 +173,12 @@ bool j1Player::Update(float dt)
 		App->map->change_map(0);
 	}
 
+	//F1: Go to Map 2
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		App->map->change_map(1);
+	}
+
 	//F2: Reset current Map 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
