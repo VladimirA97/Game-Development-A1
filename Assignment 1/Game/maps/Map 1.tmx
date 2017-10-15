@@ -3,7 +3,10 @@
  <tileset firstgid="1" name="OurTileSet" tilewidth="35" tileheight="35" spacing="3" margin="3" tilecount="32" columns="8">
   <image source="OurTileSet.png" width="307" height="155"/>
  </tileset>
- <layer name="Capa de patrones 3" width="70" height="20">
+ <layer name="Tile Layer 1" width="70" height="20">
+  <properties>
+   <property name="collider_layer" type="bool" value="false"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -1407,7 +1410,10 @@
    <tile gid="11"/>
   </data>
  </layer>
- <layer name="Capa de patrones 2" width="70" height="20">
+ <layer name="Colliders" width="70" height="20">
+  <properties>
+   <property name="collider_layer" type="bool" value="true"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
