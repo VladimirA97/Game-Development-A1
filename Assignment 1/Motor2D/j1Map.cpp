@@ -85,8 +85,7 @@ void j1Map::Draw()
 		}
 	}*/
 
-	SDL_Rect rect = { 0,0,0,0 };
-	p2List_item<map_layer*>* item;
+	p2List_item<map_layer*>* item = nullptr;
 	item = data.layers.start;
 
 	while (item != NULL)
@@ -98,20 +97,16 @@ void j1Map::Draw()
 				for (int _x = 0; _x < item->data->width; ++_x)
 				{
 					iPoint point = MapToWorld(_x, _y);
-					//point+offset_coeficient*player.x
 					App->render->Blit(
 						data.tilesets.start->data->texture,
 						point.x - App->render->camera.x * item->data->parallax, point.y,
 						&data.tilesets.start->data->GetTileRect(item->data->data[item->data->Get(_x, _y)]));
 				}
 			}
-
 		}
 		item = item->next;
 	}
-
 }
-
 
 iPoint j1Map::MapToWorld(int x, int y) const
 {
@@ -169,6 +164,7 @@ bool j1Map::CleanUp()
 			data.colliders[i] = nullptr;
 		}
 	}
+
 	// Clean up the pugui tree
 	map_file.reset();
 
@@ -213,6 +209,7 @@ bool j1Map::Load(const char* file_name)
 
 		data.tilesets.add(set);
 	}
+
 	pugi::xml_node layer;
 	for (layer = map_file.child("map").child("layer"); layer && ret; layer = layer.next_sibling("layer"))
 	{
@@ -228,8 +225,6 @@ bool j1Map::Load(const char* file_name)
 
 	// TODO 4: Iterate all layers and load each of them
 	// Load layer info ----------------------------------------------
-
-
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -249,7 +244,6 @@ bool j1Map::Load(const char* file_name)
 
 		// TODO 4: Add info here about your loaded layers
 		// Adapt this vcode with your own variables
-
 		p2List_item<map_layer*>* item_layer = data.layers.start;
 		while (item_layer != NULL)
 		{
@@ -310,7 +304,6 @@ bool j1Map::LoadMap()
 		}
 
 		p2SString orientation(map.attribute("orientation").as_string());
-
 		if(orientation == "orthogonal")
 		{
 			data.type = MAPTYPE_ORTHOGONAL;
@@ -463,13 +456,13 @@ bool j1Map::CreateColliders(map_layer* layer)
 				break;
 
 			case 24:
-				App->player->initial_x = point.x;
-				App->player->initial_y = point.y;
+				App->player->original_x = point.x;
+				App->player->original_y = point.y;
 				break;
 
 			case 16:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->collision->AddCollider(rect, COLLIDER_LAVA);
+					data.colliders[j] = App->collision->AddCollider(rect, COLLIDER_WATER);
 				j++;
 				break;
 

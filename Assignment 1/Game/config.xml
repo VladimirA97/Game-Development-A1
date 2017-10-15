@@ -11,7 +11,7 @@
   </renderer>
 
   <window>
-    <resolution width="1024" height="736" scale="1"/>
+    <resolution width="1024" height="700" scale="1"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -31,11 +31,10 @@
   </map>
 
   <player>
-    <size width="45" height="110"/>
-    <lifes numLifes="3"/>
-    <acceleration jump="1.95" horizontal="0.03"/>
-    <velocity max="0.9"/>
-    <gravity value="0.014"/>
+    <dimentions clld_width="30" clld_height="60"/>
+    <acceleration jump="1.5" horizontal="0.015"/>
+    <velocity value="0.5"/>
+    <gravity value="0.0075"/>
   </player>
 
   <collision>

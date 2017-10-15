@@ -37,30 +37,26 @@ public:
 
 public:
 
-	SDL_Texture* graphics = nullptr;
-	SDL_Texture* sprites = nullptr;
+	SDL_Texture* player_graphics = nullptr;
 
 	Collider* collider;
 	fPoint position;
 
 	Animation* current_animation = nullptr;
 	Animation idle;
-	Animation left;
-	Animation right;
-	Animation jumpsquatRight;
-	Animation jumpsquatLeft;
+	Animation run_right;
+	Animation run_left;
+	Animation jump_right;
+	Animation jump_left;
 
 	//default values are added if everything that sets em up is going horrible
-	int lifes = 3;
-	int initial_x = 10;
-	int initial_y = 10;
-	int width = 200;
-	int height = 200;
-	int playerw = 10;
-	int playerh = 33;
+	int original_x = 10;
+	int original_y = 10;
+	int clld_width = 30;
+	int clld_height = 60;
 	float jump_speed = -5;
 	float acceleration = 0.1;
-	float max_speed = 1;
+	float velocity = 0.5;
 	float gravity = 0.01;
 
 	object* player;
