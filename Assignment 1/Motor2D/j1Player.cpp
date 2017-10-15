@@ -165,18 +165,6 @@ bool j1Player::Update(float dt)
 		player->velocity.y = +5.0; //stack to the floor
 	}
 
-	//F1: Go to Map 1
-	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		App->MMap->change_map(0);
-	}
-
-	//F1: Go to Map 1
-	if (App->MInput->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		App->MMap->change_map(1);
-	}
-
 	//F2: Reset current Map 
 	if (App->MInput->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
@@ -203,14 +191,8 @@ bool j1Player::Update(float dt)
 	return true;
 }
 
-
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_FORWARD)
-	{
-		App->MMap->next_level();
-	}
-
 	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER)
 	{
 		SetPosOrigin();
@@ -230,7 +212,7 @@ bool j1Player::Save(pugi::xml_node& node) const
 
 bool j1Player::Load(pugi::xml_node& node)
 {
-	App->MMap->change_map(node.child("position").attribute("current_map").as_uint());
+	App->MMap->switch_map(node.child("position").attribute("current_map").as_uint());
 	player->position.x = node.child("position").attribute("x").as_int();
 	player->position.y = node.child("position").attribute("y").as_int();
 	player->velocity.x = 0;

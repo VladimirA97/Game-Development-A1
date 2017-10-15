@@ -108,13 +108,11 @@ public:
 	p2SString curr_name_map;
 	uint id_map = 0;
 
-	void change_map(uint index);
-	void next_level();
+	void switch_map(uint index);
 
 private:
 	pugi::xml_document	map_file;
 	p2SString			path;
 	bool				map_loaded;
 };
-
-#endif // __j1MAP_H__
+#endif

@@ -4,40 +4,31 @@
 #include "j1Input.h"
 #include "j1Render.h"
 
-
 j1Colliders::j1Colliders()
 {
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	{
 		colliders[i] = nullptr;
+	}
 
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PREVENT] = true;
-	matrix[COLLIDER_WALL][COLLIDER_FORWARD] = false;
 	matrix[COLLIDER_WALL][COLLIDER_WATER] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PREVENT] = false;
-	matrix[COLLIDER_PLAYER][COLLIDER_FORWARD] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_WATER] = true;
 
 	matrix[COLLIDER_PREVENT][COLLIDER_PREVENT] = false;
 	matrix[COLLIDER_PREVENT][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PREVENT][COLLIDER_PLAYER] = false;
-	matrix[COLLIDER_PREVENT][COLLIDER_FORWARD] = false;
 	matrix[COLLIDER_PREVENT][COLLIDER_WATER] = false;
-
-	matrix[COLLIDER_FORWARD][COLLIDER_PREVENT] = false;
-	matrix[COLLIDER_FORWARD][COLLIDER_WALL] = false;
-	matrix[COLLIDER_FORWARD][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_FORWARD][COLLIDER_FORWARD] = false;
-	matrix[COLLIDER_FORWARD][COLLIDER_WATER] = false;
 
 	matrix[COLLIDER_WATER][COLLIDER_PREVENT] = false;
 	matrix[COLLIDER_WATER][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WATER][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WATER][COLLIDER_FORWARD] = false;
 	matrix[COLLIDER_WATER][COLLIDER_WATER] = false;
 
 	name.create("Colliders");
@@ -63,7 +54,6 @@ bool j1Colliders::PreUpdate()
 			colliders[i] = nullptr;
 		}
 	}
-
 	return true;
 }
 
@@ -72,7 +62,6 @@ bool j1Colliders::Update(float dt)
 {
 	Collider* c1;
 	Collider* c2;
-
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		// skip empty colliders
@@ -105,7 +94,6 @@ bool j1Colliders::Update(float dt)
 			}
 		}
 	}
-
 	return true;
 }
 
@@ -118,10 +106,14 @@ bool j1Colliders::PostUpdate()
 void j1Colliders::DebugDraw()
 {
 	if (App->MInput->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
 		debug = !debug;
+	}
 
 	if (debug == false)
+	{
 		return;
+	}
 
 	Uint8 alpha = 100;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -134,27 +126,18 @@ void j1Colliders::DebugDraw()
 		case COLLIDER_NONE:
 			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 255, alpha); //White
 			break;
-
 		case COLLIDER_WALL:
 			App->MRender->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha); //Blue
 			break;
-
 		case COLLIDER_PLAYER:
 			App->MRender->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha); //Green
 			break;
-
 		case COLLIDER_WATER:
 			App->MRender->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha); //Red
 			break;
-
 		case COLLIDER_PREVENT:
-			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
-			break;
-
-		case COLLIDER_FORWARD:
 			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha); //Yellow
 			break;
-
 		default:
 			break;
 		}
@@ -165,7 +148,6 @@ void j1Colliders::DebugDraw()
 bool j1Colliders::CleanUp()
 {
 	LOG("Freeing all colliders");
-
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] != nullptr)
@@ -173,14 +155,12 @@ bool j1Colliders::CleanUp()
 			RELEASE(colliders[i]);
 		}
 	}
-
 	return true;
 }
 
 Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
 {
 	Collider* ret = nullptr;
-
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
@@ -189,7 +169,6 @@ Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 			break;
 		}
 	}
-
 	return ret;
 }
 

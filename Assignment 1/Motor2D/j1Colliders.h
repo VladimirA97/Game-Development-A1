@@ -1,7 +1,7 @@
 #ifndef __J1COLLIDERS_H__
 #define __J1COLLIDERS_H__
 
-#define MAX_COLLIDERS 300
+#define MAX_COLLIDERS 500
 
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
@@ -13,7 +13,7 @@ enum COLLIDER_TYPE
 	COLLIDER_PLAYER,
 	COLLIDER_WALL,
 	COLLIDER_WATER,
-	COLLIDER_FORWARD,
+
 	COLLIDER_PREVENT,
 
 	COLLIDER_MAX

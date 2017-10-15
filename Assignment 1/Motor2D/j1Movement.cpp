@@ -52,9 +52,13 @@ bool j1Movement::CleanUp()
 		if (bodies[i] != nullptr)
 		{
 			if (bodies[i]->collider != nullptr)
+			{
 				bodies[i]->collider->to_delete = true;
+			}
 			if (bodies[i]->prevent != nullptr)
+			{
 				bodies[i]->prevent->to_delete = true;
+			}
 			delete bodies[i];
 		}
 	}

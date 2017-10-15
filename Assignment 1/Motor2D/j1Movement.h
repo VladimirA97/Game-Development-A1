@@ -5,7 +5,7 @@
 #include "p2Point.h"
 #include "j1Colliders.h"
 
-#define MAX_OBJECTS 5
+#define MAX_OBJECTS 10
 
 struct Body
 {
