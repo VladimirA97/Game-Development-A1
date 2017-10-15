@@ -17,6 +17,8 @@ Decompress the .zip file in any directory and execute the executable inside the 
 
 ### Special features
 - F2: Reset the character in the original start point.
+- F5: Save the current character position.
+- F6: Load the last saved situation.
 
 ## Credits
 - Vladimir Agache ([Github](https://github.com/VladimirA97))
@@ -28,4 +30,3 @@ All rights over the game from different sources.
 For art: [Game Art 2D](http://www.gameart2d.com/)
 
 For sound: [AudioBlocks](https://www.audioblocks.com/)
-
