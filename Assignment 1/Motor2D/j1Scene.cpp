@@ -36,6 +36,7 @@ bool j1Scene::Start()
 {
 	App->MMap->Load(App->MMap->curr_name_map.GetString());
 	background_text = App->MTextures->Load("maps/BG1.png");
+	App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
 	return true;
 }
 
@@ -78,7 +79,7 @@ bool j1Scene::Update(float dt)
 	App->MRender->Blit(background_text, App->MRender->camera.x - 500, App->MRender->camera.y, &background_rect, 0.01f);
 	App->MMap->Draw();
 
-	p2SString title("2D Platformer");
+	p2SString title("Escape!");
 	App->MWindow->SetTitle(title.GetString());
 
 	return true;
