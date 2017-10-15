@@ -53,10 +53,10 @@ public:
 	int original_y = 10;
 	int clld_width = 30;
 	int clld_height = 60;
-	float jump_speed = -5;
-	float acceleration = 0.1;
-	float velocity = 0.5;
-	float gravity = 0.01;
+	float acc_y = 15;
+	float acc_x = 5;
+	float velocity = 5.0;
+	float gravity = 0.75;
 
 	Body* player;
 };

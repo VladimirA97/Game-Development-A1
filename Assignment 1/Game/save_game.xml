@@ -8,7 +8,7 @@
 	<Test />
 	<Colliders />
 	<player>
-		<position x="35" y="570.022522" current_map="0" />
+		<position x="269.344177" y="465.022522" current_map="0" />
 	</player>
 	<:anonymous />
 	<renderer>

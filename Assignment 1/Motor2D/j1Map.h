@@ -5,19 +5,20 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include "j1Colliders.h"
 #include "SDL/include/SDL.h"
 
-// TODO 1: Create a struct for the map layer
-// ----------------------------------------------------
 struct map_layer
 {
 	p2SString name;
-	uint* data = nullptr;
+	uint* tiles = nullptr;
 	uint size = 0;
 	uint width = 0;
 	uint height = 0;
-	bool logic_layer = false;
-	float parallax = 0.0;
+
+	bool movement_layer = false;
+	float map_scroll = 0;
+
 	inline uint Get(int x, int y)const
 	{
 		return y*width + x;
@@ -25,14 +26,12 @@ struct map_layer
 
 	~map_layer()
 	{
-		RELEASE_ARRAY(data);
+		RELEASE_ARRAY(tiles);
 	}
-
 };
 
 struct TileSet
 {
-	// TODO 7: Create a method that receives a tile id and returns it's Rectfind the Rect associated with a specific tile id
 	SDL_Rect GetTileRect(int id) const;
 
 	p2SString			name;
@@ -52,10 +51,10 @@ struct TileSet
 
 enum MapTypes
 {
-	MAPTYPE_UNKNOWN = 0,
-	MAPTYPE_ORTHOGONAL,
-	MAPTYPE_ISOMETRIC,
-	MAPTYPE_STAGGERED
+	UNKNOWN_MAP = 0,
+	ORTHOGONAL_MAP,
+	ISOMETRIC_MAP,
+	STAGGERED_MAP
 };
 
 struct MapData
@@ -69,13 +68,12 @@ struct MapData
 	p2List<TileSet*>	tilesets;
 	//Add a list of layers to the map
 	p2List<map_layer*> layers;
-	Collider* colliders[500];
+	Collider* colliders[MAX_COLLIDERS];
 };
 
 class j1Map : public j1Module
 {
 public:
-
 	j1Map();
 
 	// Destructor
@@ -93,11 +91,10 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	// TODO 8: Create a method that translates x,y coordinates from map positions to world positions
+	//A method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
 
 private:
-
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
@@ -108,16 +105,15 @@ private:
 public:
 	MapData data;
 	p2List<p2SString>  maps;
-	p2SString current_map;
-	uint index_map = 0;
+	p2SString curr_name_map;
+	uint id_map = 0;
 
 	void change_map(uint index);
 	void next_level();
 
 private:
-
 	pugi::xml_document	map_file;
-	p2SString			folder;
+	p2SString			path;
 	bool				map_loaded;
 };
 

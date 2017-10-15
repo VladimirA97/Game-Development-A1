@@ -2,12 +2,12 @@
 
 <config>
   <app>
-    <title>Game Development Testbed</title>
+    <title>2D Platform</title>
     <organization>UPC</organization>
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
   </renderer>
 
   <window>
@@ -23,8 +23,8 @@
   </file_system>
 
   <map>
-    <folder>maps/</folder>
-    <initial_map value ="0"/>
+    <path>maps/</path>
+    <first_map value ="0"/>
     <background r ="0" g="0" b="0"/>
     <map directory ="BondacheMap1.tmx"/>
     <map directory ="BondacheMap2.tmx"/>
@@ -32,9 +32,9 @@
 
   <player>
     <dimentions clld_width="30" clld_height="60"/>
-    <acceleration jump="1.5" horizontal="0.015"/>
-    <velocity value="0.5"/>
-    <gravity value="0.0075"/>
+    <acceleration acc_y="15.0" acc_x="5.0"/>
+    <velocity value="5.0"/>
+    <gravity value="0.75"/>
   </player>
 
   <collision>

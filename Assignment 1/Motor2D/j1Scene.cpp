@@ -34,7 +34,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->MMap->Load(App->MMap->current_map.GetString());
+	App->MMap->Load(App->MMap->curr_name_map.GetString());
 	background_text = App->MTextures->Load("maps/BG1.png");
 	return true;
 }

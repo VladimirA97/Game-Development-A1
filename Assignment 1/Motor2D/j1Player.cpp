@@ -24,7 +24,7 @@ j1Player::j1Player()
 	idle.PushBack({ 212, 0, 53, 64 });
 	idle.PushBack({ 265, 0, 53, 64 });
 	idle.PushBack({ 318, 0, 53, 64 });
-	idle.speed = 0.02f;
+	idle.speed = 0.5f;
 	idle.loop = true;
 
 	//Animation right
@@ -35,7 +35,7 @@ j1Player::j1Player()
 	run_right.PushBack({ 212, 192, 53, 64 });
 	run_right.PushBack({ 265, 192, 53, 64 });
 	run_right.PushBack({ 318, 192, 53, 64 });
-	run_right.speed = 0.02f;
+	run_right.speed = 0.5f;
 	run_right.loop = true;
 
 	//Animation left
@@ -46,7 +46,7 @@ j1Player::j1Player()
 	run_left.PushBack({ 212, 256, 53, 64 });
 	run_left.PushBack({ 265, 256, 53, 64 });
 	run_left.PushBack({ 318, 256, 53, 64 });
-	run_left.speed = 0.02f;
+	run_left.speed = 0.5f;
 	run_left.loop = true;
 
 	//Animation jumps_right;
@@ -57,7 +57,7 @@ j1Player::j1Player()
 	jump_right.PushBack({ 212, 64, 53, 64 });
 	jump_right.PushBack({ 265, 64, 53, 64 });
 	jump_right.PushBack({ 318, 64, 53, 64 });
-	jump_right.speed = 0.001f;
+	jump_right.speed = 0.5f;
 	jump_right.loop = false;
 
 	//Animation jump_left;
@@ -68,7 +68,7 @@ j1Player::j1Player()
 	jump_left.PushBack({ 212, 192, 53, 64 });
 	jump_left.PushBack({ 265, 192, 53, 64 });
 	jump_left.PushBack({ 318, 192, 53, 64 });
-	jump_left.speed = 0.001f;
+	jump_left.speed = 0.5f;
 	jump_left.loop = false;
 }
 
@@ -78,8 +78,8 @@ bool j1Player::Awake(pugi::xml_node& config)
 	clld_width = config.child("dimentions").attribute("clld_width").as_int(30);
 	clld_height = config.child("dimentions").attribute("clld_height").as_int(60);
 
-	jump_speed = config.child("acceleration").attribute("jump").as_float(1.15);
-	acceleration = config.child("acceleration").attribute("horizontal").as_float(0.015);
+	acc_y = config.child("acceleration").attribute("acc_y").as_float(1.15);
+	acc_x = config.child("acceleration").attribute("acc_x").as_float(0.015);
 	velocity = config.child("velocity").attribute("value").as_float(0.5);
 	gravity = config.child("gravity").attribute("value").as_float(0.0075);
 
@@ -122,33 +122,31 @@ bool j1Player::PreUpdate()
 	return true;
 }
 
-//Update: draw background
 bool j1Player::Update(float dt)
 {
 	//CONTROLS
 	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <velocity)
 	{
-		player->acceleration.x = acceleration;
+		player->acceleration.x = acc_x;
 		current_animation = &run_right;
 	}
 	if (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x >-velocity)
 	{
-		player->acceleration.x = -acceleration;
+		player->acceleration.x = -acc_x;
 		current_animation = &run_left;
 	}
+
 	if (player->velocity.x > velocity || player->velocity.x < -velocity)
 	{
 		player->acceleration.x = 0;
 	}
 
-	if ((App->MInput->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-		&& (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
+	if ((App->MInput->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
 	{
 		current_animation = &idle;
 		player->acceleration.x = -player->velocity.x;
 	}
-	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
-		&& App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		current_animation = &idle;
 		player->acceleration.x = -player->velocity.x;
@@ -158,14 +156,13 @@ bool j1Player::Update(float dt)
 	if (App->MInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN && player->is_touching && player->velocity.y < 0.5)
 	{
 		current_animation = &jump_right;
-		player->velocity.y = -jump_speed;
+		player->velocity.y = -acc_y;
 		player->is_touching = false;
 	}
 
 	if (App->MInput->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-
-		player->velocity.y -= -1.0; //stack to the floor
+		player->velocity.y = +5.0; //stack to the floor
 	}
 
 	//F1: Go to Map 1
@@ -174,7 +171,7 @@ bool j1Player::Update(float dt)
 		App->MMap->change_map(0);
 	}
 
-	//F1: Go to Map 2
+	//F1: Go to Map 1
 	if (App->MInput->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		App->MMap->change_map(1);
@@ -186,19 +183,21 @@ bool j1Player::Update(float dt)
 		SetPosOrigin();
 	}
 
-	//aereal animations
 	if (player->is_touching == false)
 	{
 		if (player->velocity.y < 0)
 		{
 			if (player->velocity.x < 0)
+			{
 				current_animation = &jump_left;
+			}
 			if (player->velocity.x > 0)
+			{
 				current_animation = &jump_right;
+			}
 		}
 	}
 
-	//blit
 	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
 
 	return true;
@@ -207,12 +206,12 @@ bool j1Player::Update(float dt)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1->clld_type == COLLIDER_PLAYER &&c2->clld_type == COLLIDER_FORWARD)
+	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_FORWARD)
 	{
 		App->MMap->next_level();
 	}
 
-	if (c1->clld_type == COLLIDER_PLAYER &&c2->clld_type == COLLIDER_WATER)
+	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER)
 	{
 		SetPosOrigin();
 	}
@@ -224,7 +223,7 @@ bool j1Player::Save(pugi::xml_node& node) const
 
 	pos.append_attribute("x") = player->position.x;
 	pos.append_attribute("y") = player->position.y;
-	pos.append_attribute("current_map") = App->MMap->index_map;
+	pos.append_attribute("current_map") = App->MMap->id_map;
 
 	return true;
 }
