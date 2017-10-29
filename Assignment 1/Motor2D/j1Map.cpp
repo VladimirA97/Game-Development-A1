@@ -12,6 +12,9 @@
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
 	name.create("map");
+
+	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+		data.colliders[i] = nullptr;
 }
 
 // Destructor
@@ -387,8 +390,10 @@ bool j1Map::LoadLayer(pugi::xml_node& node, map_layer* layer)
 bool j1Map::CreateColliders(map_layer* layer)
 {
 	int j = 0;
-	data.colliders[j] = App->Colliders->AddCollider({ -33,0,35,(int)layer->height * 35 }, COLLIDER_WALL); ++j;
-	data.colliders[j] = App->Colliders->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); ++j;
+
+	/*data.colliders[j] = App->Colliders->AddCollider({ -35,0,35,(int)layer->height * 35 }, COLLIDER_WALL); ++j;
+	data.colliders[j] = App->Colliders->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); ++j;*/
+
 	for (int _y = 0; _y < layer->height; ++_y)
 	{
 		for (int _x = 0; _x < layer->width; ++_x)
@@ -405,7 +410,7 @@ bool j1Map::CreateColliders(map_layer* layer)
 			{
 			case 32:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_PLAYER);
+					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_NEXT_MAP);
 				j++;
 				break;
 			case 8:
@@ -415,8 +420,11 @@ bool j1Map::CreateColliders(map_layer* layer)
 				break;
 
 			case 24:
+				if (data.colliders[j] == nullptr)
+					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_PLAYER);
+
 				App->MPlayer->original_x = point.x;
-				App->MPlayer->original_y = point.y;
+				App->MPlayer->original_y = point.y; 
 				break;
 
 			case 16:
@@ -434,9 +442,18 @@ bool j1Map::CreateColliders(map_layer* layer)
 	return true;
 }
 
-void j1Map::switch_map(uint map)
+void j1Map::switch_map(uint index)
 {
+	id_map = index;
 	CleanUp();
-	Load(maps[map].GetString());
+	Load(maps[id_map].GetString());
+	App->MPlayer->SetPosOrigin();
+}
+
+void j1Map::following_map()
+{
+	id_map += 1;
+	CleanUp();
+	Load(maps[id_map].GetString());
 	App->MPlayer->SetPosOrigin();
 }

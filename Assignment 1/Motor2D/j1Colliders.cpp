@@ -14,21 +14,32 @@ j1Colliders::j1Colliders()
 	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PREVENT] = true;
+	matrix[COLLIDER_WALL][COLLIDER_NEXT_MAP] = false;
 	matrix[COLLIDER_WALL][COLLIDER_WATER] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PREVENT] = false;
+	matrix[COLLIDER_PLAYER][COLLIDER_NEXT_MAP] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_WATER] = true;
 
 	matrix[COLLIDER_PREVENT][COLLIDER_PREVENT] = false;
 	matrix[COLLIDER_PREVENT][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PREVENT][COLLIDER_PLAYER] = false;
+	matrix[COLLIDER_PREVENT][COLLIDER_NEXT_MAP] = false;
 	matrix[COLLIDER_PREVENT][COLLIDER_WATER] = false;
+
+	matrix[COLLIDER_NEXT_MAP][COLLIDER_PREVENT] = false;
+	matrix[COLLIDER_NEXT_MAP][COLLIDER_WALL] = false;
+	matrix[COLLIDER_NEXT_MAP][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_NEXT_MAP][COLLIDER_NEXT_MAP] = false;
+	matrix[COLLIDER_NEXT_MAP][COLLIDER_WATER] = false;
 
 	matrix[COLLIDER_WATER][COLLIDER_PREVENT] = false;
 	matrix[COLLIDER_WATER][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WATER][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_WATER][COLLIDER_NEXT_MAP] = false;
+
 	matrix[COLLIDER_WATER][COLLIDER_WATER] = false;
 
 	name.create("Colliders");
@@ -105,10 +116,10 @@ bool j1Colliders::PostUpdate()
 
 void j1Colliders::DebugDraw()
 {
-	//if (App->MInput->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	//{
-	//	debug = !debug;
-	//}
+	if (App->MInput->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		debug = !debug;
+	}
 
 	if (debug == false)
 	{
@@ -136,7 +147,9 @@ void j1Colliders::DebugDraw()
 			App->MRender->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha); //Red
 			break;
 		case COLLIDER_PREVENT:
-			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha); //Yellow
+			break;
+		case COLLIDER_NEXT_MAP:
+			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 		default:
 			break;

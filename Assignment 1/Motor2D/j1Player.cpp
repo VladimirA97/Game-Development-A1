@@ -166,6 +166,14 @@ bool j1Player::Update(float dt)
 	}
 
 	//F2: Reset current Map 
+	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		App->MMap->switch_map(0);
+	}
+	if (App->MInput->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		App->MMap->switch_map(1);
+	}
 	if (App->MInput->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
 		SetPosOrigin();
@@ -196,6 +204,10 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER)
 	{
 		SetPosOrigin();
+	}
+	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_NEXT_MAP)
+	{
+		App->MMap->following_map();
 	}
 }
 

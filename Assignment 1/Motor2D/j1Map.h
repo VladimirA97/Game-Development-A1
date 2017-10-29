@@ -109,6 +109,7 @@ public:
 	uint id_map = 0;
 
 	void switch_map(uint index);
+	void following_map();
 
 private:
 	pugi::xml_document	map_file;
