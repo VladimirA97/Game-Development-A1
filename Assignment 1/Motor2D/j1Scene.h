@@ -35,6 +35,8 @@ public:
 public:
 	SDL_Texture* background_text = nullptr;
 	SDL_Rect background_rect;
+
+	bool lost = false;
 };
 
 #endif // __j1SCENE_H__

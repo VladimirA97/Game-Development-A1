@@ -18,6 +18,8 @@ class j1Player;
 class j1Colliders;
 class j1Movement;
 
+class j1FadeToBlack;
+
 class j1App
 {
 public:
@@ -91,6 +93,8 @@ public:
 	j1Player*			MPlayer;
 	j1Colliders*		Colliders;
 	j1Movement*			MMovement;
+
+	//j1FadeToBlack       MFade;
 
 private:
 

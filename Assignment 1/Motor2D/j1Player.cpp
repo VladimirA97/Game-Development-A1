@@ -58,7 +58,7 @@ j1Player::j1Player()
 	jump_right.PushBack({ 265, 64, 53, 64 });
 	jump_right.PushBack({ 318, 64, 53, 64 });
 	jump_right.speed = 0.5f;
-	jump_right.loop = false;
+	jump_right.loop = true;
 
 	//Animation jump_left;
 	jump_left.PushBack({ 0, 192, 53, 64 });
@@ -69,7 +69,7 @@ j1Player::j1Player()
 	jump_left.PushBack({ 265, 192, 53, 64 });
 	jump_left.PushBack({ 318, 192, 53, 64 });
 	jump_left.speed = 0.5f;
-	jump_left.loop = false;
+	jump_left.loop = true;
 }
 
 bool j1Player::Awake(pugi::xml_node& config)

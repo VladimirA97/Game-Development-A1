@@ -157,7 +157,7 @@ bool j1Map::Load(const char* file_name)
 		ret = LoadMap();
 	}
 
-	// Load all tilesets info ----------------------------------------------
+	// Load all tilesets info -----------------------------------------
 	pugi::xml_node tileset;
 	for (tileset = map_file.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
@@ -221,6 +221,7 @@ bool j1Map::Load(const char* file_name)
 		}
 	}
 	map_loaded = ret;
+
 	return ret;
 }
 
@@ -268,15 +269,15 @@ bool j1Map::LoadMap()
 		}
 
 		p2SString orientation(map.attribute("orientation").as_string());
-		if(orientation == "orthogonal")
+		if (orientation == "orthogonal")
 		{
 			data.type = ORTHOGONAL_MAP;
 		}
-		else if(orientation == "isometric")
+		else if (orientation == "isometric")
 		{
 			data.type = ISOMETRIC_MAP;
 		}
-		else if(orientation == "staggered")
+		else if (orientation == "staggered")
 		{
 			data.type = STAGGERED_MAP;
 		}
@@ -285,7 +286,6 @@ bool j1Map::LoadMap()
 			data.type = UNKNOWN_MAP;
 		}
 	}
-
 	return ret;
 }
 
@@ -391,8 +391,10 @@ bool j1Map::CreateColliders(map_layer* layer)
 {
 	int j = 0;
 
-	/*data.colliders[j] = App->Colliders->AddCollider({ -35,0,35,(int)layer->height * 35 }, COLLIDER_WALL); ++j;
-	data.colliders[j] = App->Colliders->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); ++j;*/
+	data.colliders[j] = App->Colliders->AddCollider({-35, 0, 35,(int)layer->height * 35 }, COLLIDER_WALL); 
+	++j;
+	data.colliders[j] = App->Colliders->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); 
+	++j;
 
 	for (int _y = 0; _y < layer->height; ++_y)
 	{
@@ -422,9 +424,8 @@ bool j1Map::CreateColliders(map_layer* layer)
 			case 24:
 				if (data.colliders[j] == nullptr)
 					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_PLAYER);
-
-				App->MPlayer->original_x = point.x;
-				App->MPlayer->original_y = point.y; 
+					App->MPlayer->original_x = point.x;
+					App->MPlayer->original_y = point.y;
 				break;
 
 			case 16:
@@ -438,7 +439,6 @@ bool j1Map::CreateColliders(map_layer* layer)
 			}
 		}
 	}
-
 	return true;
 }
 
@@ -452,7 +452,7 @@ void j1Map::switch_map(uint index)
 
 void j1Map::following_map()
 {
-	id_map += 1;
+	id_map = 1;
 	CleanUp();
 	Load(maps[id_map].GetString());
 	App->MPlayer->SetPosOrigin();
