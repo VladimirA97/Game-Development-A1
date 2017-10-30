@@ -8,10 +8,10 @@
 #include "j1Colliders.h"
 #include "SDL/include/SDL.h"
 
-struct map_layer
+struct MapLayer
 {
 	p2SString name;
-	uint* tiles = nullptr;
+	uint* data = nullptr;
 	uint size = 0;
 	uint width = 0;
 	uint height = 0;
@@ -24,9 +24,9 @@ struct map_layer
 		return y*width + x;
 	};
 
-	~map_layer()
+	~MapLayer()
 	{
-		RELEASE_ARRAY(tiles);
+		RELEASE_ARRAY(data);
 	}
 };
 
@@ -67,7 +67,7 @@ struct MapData
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
 	//Add a list of layers to the map
-	p2List<map_layer*> layers;
+	p2List<MapLayer*> layers;
 	Collider* colliders[MAX_COLLIDERS];
 };
 
@@ -98,9 +98,9 @@ private:
 	bool LoadMap();
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
-	bool LoadLayer(pugi::xml_node& node, map_layer* layer);
+	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
-	bool CreateColliders(map_layer* layer);
+	bool CreateColliders(MapLayer* layer);
 
 public:
 	MapData data;

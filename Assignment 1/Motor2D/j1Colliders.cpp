@@ -126,7 +126,7 @@ void j1Colliders::DebugDraw()
 		return;
 	}
 
-	Uint8 alpha = 100;
+	Uint8 alpha = 80;
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
@@ -166,15 +166,18 @@ bool j1Colliders::CleanUp()
 	{
 		if (colliders[i] != nullptr)
 		{
-			RELEASE(colliders[i]);
+			delete colliders[i];
+			colliders[i] = nullptr;
 		}
 	}
+
 	return true;
 }
 
 Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* callback)
 {
 	Collider* ret = nullptr;
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] == nullptr)
@@ -183,13 +186,18 @@ Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 			break;
 		}
 	}
+
 	return ret;
 }
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	return (rect.x < r.x + r.w &&
-	    	rect.x + rect.w > r.x &&
-		    rect.y < r.y + r.h &&
-		    rect.h + rect.y > r.y);
+	bool ret = false;
+
+	if (((rect.y + rect.h) > r.y && (r.y + r.h) > rect.y) && ((rect.x + rect.w) > r.x && (r.x + r.w) > rect.x))
+	{
+		ret = true;
+	}
+
+	return ret;
 }
