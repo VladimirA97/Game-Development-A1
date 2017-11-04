@@ -23,7 +23,7 @@
   </file_system>
 
   <map>
-    <path>maps/</path>
+    <folder>maps/</folder>
     <first_map value ="0"/>
     <background r ="0" g="0" b="0"/>
     <map directory ="Map 1.tmx"/>

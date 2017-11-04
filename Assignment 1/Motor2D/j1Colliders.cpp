@@ -73,6 +73,7 @@ bool j1Colliders::Update(float dt)
 {
 	Collider* c1;
 	Collider* c2;
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		// skip empty colliders
@@ -152,8 +153,6 @@ void j1Colliders::DebugDraw()
 		case COLLIDER_NEXT_MAP:
 			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
-		default:
-			break;
 		}
 	}
 }
@@ -162,6 +161,7 @@ void j1Colliders::DebugDraw()
 bool j1Colliders::CleanUp()
 {
 	LOG("Freeing all colliders");
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		if (colliders[i] != nullptr)
@@ -192,12 +192,5 @@ Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	bool ret = false;
-
-	if (((rect.y + rect.h) > r.y && (r.y + r.h) > rect.y) && ((rect.x + rect.w) > r.x && (r.x + r.w) > rect.x))
-	{
-		ret = true;
-	}
-
-	return ret;
+	return (rect.x < r.x + r.w && rect.x + rect.w > r.x && rect.y < r.y + r.h && rect.h + rect.y > r.y);
 }

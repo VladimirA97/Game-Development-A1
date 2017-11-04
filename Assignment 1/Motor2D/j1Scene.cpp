@@ -35,10 +35,11 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->MMap->Load(App->MMap->curr_name_map.GetString());
-	//App->MMap->Load("Map 1.tmx");
 
 	background_text = App->MTextures->Load("maps/BG1.png");
-	//App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
+
+	App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
+
 	return true;
 }
 
@@ -102,10 +103,12 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
 	if (background_text != nullptr)
 	{
 		App->MTextures->UnLoad(background_text);
 		background_text = nullptr;
 	}
+
 	return true;
 }

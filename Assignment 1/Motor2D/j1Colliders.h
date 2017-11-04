@@ -1,7 +1,7 @@
 #ifndef __J1COLLIDERS_H__
 #define __J1COLLIDERS_H__
 
-#define MAX_COLLIDERS 500
+#define MAX_COLLIDERS 1000
 
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
@@ -57,7 +57,6 @@ public:
 	void DebugDraw();
 
 private:
-
 	Collider* colliders[MAX_COLLIDERS];
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 	bool debug = true;
