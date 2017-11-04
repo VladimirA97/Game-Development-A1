@@ -3,7 +3,6 @@
 #include "p2Log.h"
 #include "j1Window.h"
 #include "j1Input.h"
-#include "j1FadeToBlack.h"
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
@@ -29,10 +28,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	MMap = new j1Map();
 	MPlayer = new j1Player();
 
-	Colliders = new j1Colliders();
+	MColliders = new j1Colliders();
 	MMovement = new j1Movement();
-
-	//MFade = new j1FadeToBlack();
 
 	AddModule(MInput);
 	AddModule(MWindow);
@@ -40,11 +37,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(MAudio);
 	AddModule(MMap);
 	AddModule(MScene);
-	AddModule(Colliders);
+	AddModule(MColliders);
 	AddModule(MPlayer);
 	AddModule(MMovement);
 	AddModule(MRender);
-	//AddModule(MFade);
 }
 
 // Destructor

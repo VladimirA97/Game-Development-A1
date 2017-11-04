@@ -34,8 +34,8 @@ Body* j1Movement::AddBody(float x, float y, float gravity, SDL_Rect* collider, C
 	body->acceleration.x = 0;
 	body->acceleration.y = gravity;
 
-	body->collider = App->Colliders->AddCollider(*collider, CLLD_TYPE, Callback);
-	body->prevent = App->Colliders->AddCollider(*collider, COLLIDER_PREVENT, this);
+	body->collider = App->MColliders->AddCollider(*collider, CLLD_TYPE, Callback);
+	body->prevent = App->MColliders->AddCollider(*collider, COLLIDER_PREVENT, this);
 
 	body->velocity.x = 0;
 	body->velocity.y = 0;

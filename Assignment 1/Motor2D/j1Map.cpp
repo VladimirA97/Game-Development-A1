@@ -79,6 +79,20 @@ void j1Map::Draw()
 	}
 }
 
+int Properties::Get(const char* value, int default_value) const
+{
+	p2List_item<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == value)
+			return item->data->value;
+		item = item->next;
+	}
+
+	return default_value;
+}
+
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
@@ -102,6 +116,7 @@ SDL_Rect TileSet::GetTileRect(int id) const
 bool j1Map::CleanUp()
 {
 	LOG("Unloading map");
+
 	// Remove all tilesets
 	p2List_item<TileSet*>* item;
 	item = data.tilesets.start;
@@ -113,14 +128,14 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
  
-    //clean up all layer data, Remove all layers
-	p2List_item<MapLayer*>* item_1;
-	item_1 = data.layers.start;
+    //Remove all layers
+	p2List_item<MapLayer*>* item2;
+	item2 = data.layers.start;
 
-	while (item_1 != NULL)
+	while (item2 != NULL)
 	{
-		RELEASE(item_1->data)
-		item_1 = item_1->next;
+		RELEASE(item2->data)
+		item2 = item2->next;
 	}
 	data.layers.clear();
 
@@ -135,6 +150,7 @@ bool j1Map::CleanUp()
 
 	// Clean up the pugui tree
 	map_file.reset();
+
 	return true;
 }
 
@@ -189,8 +205,7 @@ bool j1Map::Load(const char* file_name)
 		data.layers.add(set);
 	}
 
-	//Iterate all layers and load each of them
-	//Load layer info ----------------------------------------------
+	//Load layer info
 	if (ret == true)
 	{
 		LOG("Successfully parsed map XML file: %s", file_name);
@@ -208,8 +223,6 @@ bool j1Map::Load(const char* file_name)
 			item = item->next;
 		}
 
-		//Add info here about your loaded layers
-		//Adapt this vcode with your own variables
 		p2List_item<MapLayer*>* item_layer = data.layers.start;
 		while (item_layer != NULL)
 		{
@@ -220,6 +233,7 @@ bool j1Map::Load(const char* file_name)
 			item_layer = item_layer->next;
 		}
 	}
+
 	map_loaded = ret;
 
 	return ret;
@@ -387,14 +401,69 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
+//bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
+//{
+//	bool ret = true;
+//
+//	layer->name = node.attribute("name").as_string();
+//	layer->width = node.attribute("width").as_int();
+//	layer->height = node.attribute("height").as_int();
+//	LoadProperties(node, layer->properties);
+//	pugi::xml_node layer_data = node.child("data");
+//
+//	if (layer_data == NULL)
+//	{
+//		LOG("Error parsing map xml file: Cannot find 'layer/data' tag.");
+//		ret = false;
+//		RELEASE(layer);
+//	}
+//	else
+//	{
+//		layer->data = new uint[layer->width*layer->height];
+//		memset(layer->data, 0, layer->width*layer->height);
+//
+//		int i = 0;
+//		for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"))
+//		{
+//			layer->data[i++] = tile.attribute("gid").as_int(0);
+//		}
+//	}
+//
+//	return ret;
+//}
+
+bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+{
+	bool ret = false;
+
+	pugi::xml_node data = node.child("properties");
+
+	if (data != NULL)
+	{
+		pugi::xml_node prop;
+
+		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))
+		{
+			Properties::Property* p = new Properties::Property();
+
+			p->name = prop.attribute("name").as_string();
+			p->value = prop.attribute("value").as_int();
+
+			properties.list.add(p);
+		}
+	}
+
+	return ret;
+}
+
 bool j1Map::CreateColliders(MapLayer* layer)
 {
 	int j = 0;
 
-	/*data.colliders[j] = App->Colliders->AddCollider({-35, 0, 35,(int)layer->height * 35 }, COLLIDER_WALL); 
+	data.colliders[j] = App->MColliders->AddCollider({-35, 0, 35,(int)layer->height * 35 }, COLLIDER_WALL); 
 	++j;
-	data.colliders[j] = App->Colliders->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); 
-	++j;*/
+	data.colliders[j] = App->MColliders->AddCollider({ (int)layer->width * 35 - 1, 0, 35, (int)layer->height * 35 }, COLLIDER_WALL); 
+	++j;
 
 	for (int _y = 0; _y < layer->height; ++_y)
 	{
@@ -412,25 +481,25 @@ bool j1Map::CreateColliders(MapLayer* layer)
 			{
 			case 32:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_NEXT_MAP);
+					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_NEXT_MAP);
 				j++;
 				break;
 			case 8:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_WALL);
+					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_WALL);
 				j++;
 				break;
 
 			case 24:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_PLAYER);
+					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_PLAYER);
 					App->MPlayer->original_x = point.x;
 					App->MPlayer->original_y = point.y;
 				break;
 
 			case 16:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->Colliders->AddCollider(rect, COLLIDER_WATER);
+					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_WATER);
 				j++;
 				break;
 

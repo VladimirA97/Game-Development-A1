@@ -8,25 +8,56 @@
 #include "j1Colliders.h"
 #include "SDL/include/SDL.h"
 
+struct Properties
+{
+	struct Property
+	{
+		p2SString name;
+		int value;
+	};
+
+	~Properties()
+	{
+		p2List_item<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.clear();
+	}
+
+	int Get(const char* name, int default_value = 0) const;
+
+	p2List<Property*>	list;
+};
+
 struct MapLayer
 {
 	p2SString name;
-	uint* data = nullptr;
+	int width;
+	int height;
+	uint* data;
 	uint size = 0;
-	uint width = 0;
-	uint height = 0;
-
+	Properties	properties;
+	
 	bool movement_layer = false;
 	float map_scroll = 0;
 
-	inline uint Get(int x, int y)const
-	{
-		return y*width + x;
-	};
+	MapLayer() : data(NULL)
+	{}
 
 	~MapLayer()
 	{
-		RELEASE_ARRAY(data);
+		RELEASE(data);
+	}
+
+	inline uint Get(int x, int y)const
+	{
+		return (y*width + x);
 	}
 };
 
@@ -66,7 +97,7 @@ struct MapData
 	SDL_Color			background_color;
 	MapTypes			type;
 	p2List<TileSet*>	tilesets;
-	//Add a list of layers to the map
+
 	p2List<MapLayer*> layers;
 	Collider* colliders[MAX_COLLIDERS];
 };
@@ -100,10 +131,14 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
+	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+	
 	bool CreateColliders(MapLayer* layer);
 
 public:
 	MapData data;
+
+public:
 	p2List<p2SString>  maps;
 	p2SString curr_name_map;
 	uint id_map = 0;

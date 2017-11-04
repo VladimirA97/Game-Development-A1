@@ -18,8 +18,6 @@ class j1Player;
 class j1Colliders;
 class j1Movement;
 
-class j1FadeToBlack;
-
 class j1App
 {
 public:
@@ -80,21 +78,18 @@ private:
 	bool SavegameNow() const;
 
 public:
-
 	// Modules
-	j1Window*			MWindow;
-	j1Input*			MInput;
-	j1Render*			MRender;
-	j1Textures*			MTextures;
-	j1Audio*			MAudio;
-	j1Scene*			MScene;
-	j1Map*				MMap;
+	j1Window*			MWindow = NULL;
+	j1Input*			MInput = NULL;
+	j1Render*			MRender = NULL;
+	j1Textures*			MTextures = NULL;
+	j1Audio*			MAudio = NULL;
+	j1Scene*			MScene = NULL;
+	j1Map*				MMap = NULL;
 
-	j1Player*			MPlayer;
-	j1Colliders*		Colliders;
-	j1Movement*			MMovement;
-
-	//j1FadeToBlack       MFade;
+	j1Player*			MPlayer = NULL;
+	j1Colliders*		MColliders = NULL;
+	j1Movement*			MMovement = NULL;
 
 private:
 
