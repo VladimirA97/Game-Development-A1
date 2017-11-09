@@ -460,7 +460,6 @@ void j1Map::switch_map(uint index)
 void j1Map::following_map()
 {
 	id_map = 1;
-
 	CleanUp();
 	Load(maps[id_map].GetString());
 	App->MPlayer->SetPosOrigin();

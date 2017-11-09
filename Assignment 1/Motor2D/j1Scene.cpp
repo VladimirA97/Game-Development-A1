@@ -35,6 +35,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->MMap->Load(App->MMap->curr_name_map.GetString());
+	//App->MMap->Load("Map 1.tmx");
 
 	background_text = App->MTextures->Load("maps/BG1.png");
 
