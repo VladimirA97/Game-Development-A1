@@ -428,18 +428,15 @@ bool j1Map::CreateColliders(MapLayer* layer)
 					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_WALL);
 				j++;
 				break;
-
 			case 24:
 				App->MPlayer->original_x = point.x;
 				App->MPlayer->original_y = point.y;
 				break;
-
 			case 16:
 				if (data.colliders[j] == nullptr)
 					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_WATER);
 				j++;
 				break;
-
 			default:
 				break;
 			}

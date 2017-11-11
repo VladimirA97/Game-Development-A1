@@ -105,6 +105,7 @@ bool j1Player::Start()
 	player_graphics = App->MTextures->Load("textures/Player Spritesheet2.png");
 	current_animation = &idle;
 	player = App->MMovement->AddBody(original_x, original_y, gravity, &rect, COLLIDER_PLAYER, this);
+
 	return true;
 }
 

@@ -6,6 +6,8 @@
 
 j1Colliders::j1Colliders()
 {
+	name.create("Colliders");
+
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 	{
 		colliders[i] = nullptr;
@@ -41,8 +43,6 @@ j1Colliders::j1Colliders()
 	matrix[COLLIDER_WATER][COLLIDER_NEXT_MAP] = false;
 
 	matrix[COLLIDER_WATER][COLLIDER_WATER] = false;
-
-	name.create("Colliders");
 }
 
 j1Colliders::~j1Colliders()
@@ -51,6 +51,7 @@ j1Colliders::~j1Colliders()
 bool j1Colliders::Awake(pugi::xml_node& node)
 {
 	debug = node.child("debug").attribute("value").as_bool();
+
 	return true;
 }
 
@@ -106,12 +107,14 @@ bool j1Colliders::Update(float dt)
 			}
 		}
 	}
+
 	return true;
 }
 
 bool j1Colliders::PostUpdate()
 {
 	DebugDraw();
+
 	return true;
 }
 
@@ -192,5 +195,12 @@ Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Module* 
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	return (rect.x < r.x + r.w && rect.x + rect.w > r.x && rect.y < r.y + r.h && rect.h + rect.y > r.y);
+	bool ret = false;
+
+	if (((rect.y + rect.h) > r.y && (r.y + r.h) > rect.y) && ((rect.x + rect.w) > r.x && (r.x + r.w) > rect.x))
+	{
+		ret = true;
+	}
+
+	return ret;
 }

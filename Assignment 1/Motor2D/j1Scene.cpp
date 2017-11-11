@@ -41,6 +41,9 @@ bool j1Scene::Start()
 
 	//App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
 
+	App->MPlayer->Enable();
+	App->MColliders->Enable();
+
 	return true;
 }
 
@@ -110,6 +113,9 @@ bool j1Scene::CleanUp()
 		App->MTextures->UnLoad(background_text);
 		background_text = nullptr;
 	}
+
+	App->MPlayer->Disable();
+	App->MColliders->Disable();
 
 	return true;
 }
