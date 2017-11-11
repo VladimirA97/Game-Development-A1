@@ -35,11 +35,9 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->MMap->Load(App->MMap->curr_name_map.GetString());
-	//App->MMap->Load("Map 1.tmx");
+	//App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
 
 	background_text = App->MTextures->Load("maps/BG1.png");
-
-	//App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
 
 	App->MPlayer->Enable();
 	App->MColliders->Enable();

@@ -103,6 +103,9 @@ bool j1Player::Start()
 	rect.h = clld_height;
 
 	player_graphics = App->MTextures->Load("textures/Player Spritesheet2.png");
+	map1_done_text = App->MTextures->Load("maps/MAP1End.png");
+	map2_done_text = App->MTextures->Load("maps/MAP2End.png");
+
 	current_animation = &idle;
 	player = App->MMovement->AddBody(original_x, original_y, gravity, &rect, COLLIDER_PLAYER, this);
 
@@ -115,6 +118,17 @@ bool j1Player::CleanUp()
 	LOG("Unloading player");
 	App->MTextures->UnLoad(player_graphics);
 
+	if (map1_done_text != nullptr)
+	{
+		App->MTextures->UnLoad(map1_done_text);
+		map1_done_text = nullptr;
+	}
+
+	if (map2_done_text != nullptr)
+	{
+		App->MTextures->UnLoad(map2_done_text);
+		map2_done_text = nullptr;
+	}
 	return true;
 }
 
@@ -125,7 +139,7 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
-	//CONTROLS
+	//WASD Movement
 	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <velocity)
 	{
 		player->acceleration.x = acc_x;
@@ -166,36 +180,63 @@ bool j1Player::Update(float dt)
 		player->velocity.y = +5.0; //stack to the floor
 	}
 
-	//F2: Reset current Map 
-	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
+	//F1: Move to Map 1
+	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN){
 		App->MMap->switch_map(0);
+		velocity = 5.0f;
 	}
-	if (App->MInput->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-	{
-		App->MMap->switch_map(1);
-	}
-	if (App->MInput->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
+	//F1: Reset Map 1
+	if (App->MInput->GetKey(SDL_SCANCODE_F2) == KEY_DOWN){
 		SetPosOrigin();
 	}
-
+	//F1: Move to Map 2
+	if (App->MInput->GetKey(SDL_SCANCODE_F11) == KEY_DOWN){
+		App->MMap->switch_map(1);
+		velocity = 5.0f;
+	}
+	
 	if (player->is_touching == false)
 	{
 		if (player->velocity.y < 0)
 		{
-			if (player->velocity.x < 0)
-			{
+			if (player->velocity.x < 0){
 				current_animation = &jump_left;
 			}
-			if (player->velocity.x > 0)
-			{
+			if (player->velocity.x > 0){
 				current_animation = &jump_right;
 			}
 		}
 	}
 
 	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
+
+	//End of map checking
+	if (finishedMap1 == true)
+	{
+		App->MRender->Blit(map1_done_text, App->MPlayer->position.x, App->MPlayer->position.y, NULL, 0.0f);
+		
+		if (App->MInput->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+		{
+			App->MMap->switch_map(1);
+			velocity = 5.0f;
+		}
+		App->MPlayer->finishedMap1 = false;
+	}
+	else if (finishedMap2 == true)
+	{
+		App->MRender->Blit(map2_done_text, App->MPlayer->position.x, App->MPlayer->position.y, NULL, 0.0f);
+
+		if (App->MInput->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+		{
+			App->MMap->switch_map(0);
+			velocity = 5.0f;
+		}
+		else if (App->MInput->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			exit(0);
+		}
+		App->MPlayer->finishedMap2 = false;
+	}
 
 	return true;
 }
@@ -206,9 +247,17 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 	{
 		SetPosOrigin();
 	}
-	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_NEXT_MAP)
+
+	//End of map checking
+	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_NEXT_MAP && App->MMap->id_map == 0)
 	{
-		App->MMap->following_map();
+		finishedMap1 = true;
+		velocity = 0.0f;
+	}
+	else if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_NEXT_MAP && App->MMap->id_map == 1)
+	{
+		finishedMap2 = true;
+		velocity = 0.0f;
 	}
 }
 

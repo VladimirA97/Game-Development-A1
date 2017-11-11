@@ -37,6 +37,7 @@ public:
 	SDL_Rect background_rect;
 
 	bool lost = false;
+
 };
 
 #endif // __j1SCENE_H__

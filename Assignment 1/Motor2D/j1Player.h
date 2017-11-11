@@ -37,6 +37,11 @@ public:
 public:
 
 	SDL_Texture* player_graphics = nullptr;
+	SDL_Texture* map1_done_text = nullptr;
+	bool finishedMap1 = false;
+
+	SDL_Texture* map2_done_text = nullptr;
+	bool finishedMap2 = false;
 
 	Collider* collider;
 	fPoint position;
