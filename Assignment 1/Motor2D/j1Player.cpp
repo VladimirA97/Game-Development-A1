@@ -51,25 +51,25 @@ j1Player::j1Player()
 
 	//Animation jumps_right;
 	jump_right.PushBack({ 0, 64, 53, 64 });
-	jump_right.PushBack({ 53, 64, 53, 64 });
-	jump_right.PushBack({ 106, 64, 53, 64 });
-	jump_right.PushBack({ 159, 64, 53, 64 });
-	jump_right.PushBack({ 212, 64, 53, 64 });
-	jump_right.PushBack({ 265, 64, 53, 64 });
-	jump_right.PushBack({ 318, 64, 53, 64 });
+	//jump_right.PushBack({ 53, 64, 53, 64 });
+	//jump_right.PushBack({ 106, 64, 53, 64 });
+	//jump_right.PushBack({ 159, 64, 53, 64 });
+	//jump_right.PushBack({ 212, 64, 53, 64 });
+	//jump_right.PushBack({ 265, 64, 53, 64 });
+	//jump_right.PushBack({ 318, 64, 53, 64 });
 	jump_right.speed = 0.5f;
-	jump_right.loop = true;
+	jump_right.loop = false;
 
 	//Animation jump_left;
 	jump_left.PushBack({ 0, 192, 53, 64 });
-	jump_left.PushBack({ 53, 192, 53, 64 });
-	jump_left.PushBack({ 106, 192, 53, 64 });
-	jump_left.PushBack({ 159, 192, 53, 64 });
-	jump_left.PushBack({ 212, 192, 53, 64 });
-	jump_left.PushBack({ 265, 192, 53, 64 });
-	jump_left.PushBack({ 318, 192, 53, 64 });
+	//jump_left.PushBack({ 53, 192, 53, 64 });
+	//jump_left.PushBack({ 106, 192, 53, 64 });
+	//jump_left.PushBack({ 159, 192, 53, 64 });
+	//jump_left.PushBack({ 212, 192, 53, 64 });
+	//jump_left.PushBack({ 265, 192, 53, 64 });
+	//jump_left.PushBack({ 318, 192, 53, 64 });
 	jump_left.speed = 0.5f;
-	jump_left.loop = true;
+	jump_left.loop = false;
 }
 
 bool j1Player::Awake(pugi::xml_node& config)
@@ -87,8 +87,7 @@ bool j1Player::Awake(pugi::xml_node& config)
 }
 
 j1Player::~j1Player()
-{
-}
+{}
 
 //Load assets
 bool j1Player::Start()
@@ -140,43 +139,49 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 	//WASD Movement
-	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <velocity)
-	{
+	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <velocity){
 		player->acceleration.x = acc_x;
 		current_animation = &run_right;
 	}
-	if (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x >-velocity)
-	{
+	if (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x >-velocity){
 		player->acceleration.x = -acc_x;
 		current_animation = &run_left;
 	}
 
-	if (player->velocity.x > velocity || player->velocity.x < -velocity)
-	{
+	if (player->velocity.x > velocity || player->velocity.x < -velocity){
 		player->acceleration.x = 0;
 	}
 
-	if ((App->MInput->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_IDLE))
-	{
+	if ((App->MInput->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_IDLE)){
 		current_animation = &idle;
 		player->acceleration.x = -player->velocity.x;
 	}
-	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
+	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
 		current_animation = &idle;
 		player->acceleration.x = -player->velocity.x;
 		player->velocity.x = 0;
 	}
 
-	if (App->MInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN && player->is_touching && player->velocity.y < 0.5)
-	{
-		current_animation = &jump_right;
+	if (App->MInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN && player->is_touching && player->velocity.y < 0.5){
+		current_animation = &idle;
 		player->velocity.y = -acc_y;
 		player->is_touching = false;
 	}
 
-	if (App->MInput->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (player->is_touching == false)
 	{
+		if (player->velocity.y < 0)
+		{
+			if (player->velocity.x < 0){
+				current_animation = &jump_left;
+			}
+			if (player->velocity.x > 0){
+				current_animation = &jump_right;
+			}
+		}
+	}
+
+	if (App->MInput->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		player->velocity.y = +5.0; //stack to the floor
 	}
 
@@ -195,19 +200,6 @@ bool j1Player::Update(float dt)
 		velocity = 5.0f;
 	}
 	
-	if (player->is_touching == false)
-	{
-		if (player->velocity.y < 0)
-		{
-			if (player->velocity.x < 0){
-				current_animation = &jump_left;
-			}
-			if (player->velocity.x > 0){
-				current_animation = &jump_right;
-			}
-		}
-	}
-
 	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
 
 	//End of map checking
