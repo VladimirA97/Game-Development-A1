@@ -39,7 +39,7 @@ bool j1Scene::Start()
 
 	background_text = App->MTextures->Load("maps/BG1.png");
 
-	App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
+	//App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
 
 	return true;
 }
