@@ -43,6 +43,8 @@ public:
 	SDL_Texture* map2_done_text = nullptr;
 	bool finishedMap2 = false;
 
+	SDL_Texture* dark_text = nullptr;
+
 	Collider* collider;
 	fPoint position;
 
@@ -64,5 +66,9 @@ public:
 	float gravity = 0.75;
 
 	Body* player;
+
+public:
+	uint jump_fx;
+	uint scream_fx;
 };
 #endif

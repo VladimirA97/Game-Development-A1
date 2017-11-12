@@ -7,6 +7,7 @@
 #include "j1Colliders.h"
 #include "j1Player.h"
 #include "j1Movement.h"
+#include "j1Scene.h"
 #include <math.h>
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
@@ -450,14 +451,7 @@ void j1Map::switch_map(uint index)
 {
 	id_map = index;
 	CleanUp();
-	Load(maps[id_map].GetString());
-	App->MPlayer->SetPosOrigin();
-}
-
-void j1Map::following_map()
-{
-	id_map = 1;
-	CleanUp();
-	Load(maps[id_map].GetString());
+	App->MScene->CleanUp();
+	App->MScene->Start();
 	App->MPlayer->SetPosOrigin();
 }

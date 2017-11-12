@@ -34,13 +34,22 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->MMap->Load(App->MMap->curr_name_map.GetString());
-	//App->MAudio->PlayMusic("audio/music/Adventure.ogg");	
-
-	background_text = App->MTextures->Load("maps/BG1.png");
-
 	App->MPlayer->Enable();
 	App->MColliders->Enable();
+	App->MAudio->Enable();
+
+	App->MMap->Load(App->MMap->maps[App->MMap->id_map].GetString());
+
+	if (App->MMap->id_map == 0)
+	{
+		App->MAudio->PlayMusic("audio/music/First Map.ogg");
+	}
+	else if (App->MMap->id_map == 1)
+	{
+		App->MAudio->PlayMusic("audio/music/Second Map.ogg");
+	}
+
+	background_text = App->MTextures->Load("maps/BG1.png");
 
 	return true;
 }
@@ -74,12 +83,6 @@ bool j1Scene::Update(float dt)
 
 	if (App->MInput->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
-
-	//if (App->MInput->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	//	App->MRender->camera.y += 1;
-
-	//if (App->MInput->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	//	App->MRender->camera.y -= 1;
 	
 	App->MRender->Blit(background_text, App->MRender->camera.x - 500, App->MRender->camera.y, &background_rect, 0.01f);
 	App->MMap->Draw();
@@ -114,6 +117,7 @@ bool j1Scene::CleanUp()
 
 	App->MPlayer->Disable();
 	App->MColliders->Disable();
+	App->MAudio->Disable();
 
 	return true;
 }

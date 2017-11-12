@@ -104,9 +104,14 @@ bool j1Player::Start()
 	player_graphics = App->MTextures->Load("textures/Player Spritesheet2.png");
 	map1_done_text = App->MTextures->Load("maps/MAP1End.png");
 	map2_done_text = App->MTextures->Load("maps/MAP2End.png");
+	dark_text = App->MTextures->Load("maps/dark.png");
 
 	current_animation = &idle;
 	player = App->MMovement->AddBody(original_x, original_y, gravity, &rect, COLLIDER_PLAYER, this);
+
+	//Effects
+	jump_fx = App->MAudio->LoadFx("audio/effects/jump.wav");
+	scream_fx = App->MAudio->LoadFx("audio/effects/scream.wav");
 
 	return true;
 }
@@ -166,6 +171,8 @@ bool j1Player::Update(float dt)
 		current_animation = &idle;
 		player->velocity.y = -acc_y;
 		player->is_touching = false;
+		//Effect
+		App->MAudio->PlayFx(jump_fx);
 	}
 
 	if (player->is_touching == false)
@@ -185,7 +192,7 @@ bool j1Player::Update(float dt)
 		player->velocity.y = +5.0; //stack to the floor
 	}
 
-	//F1: Move to Map 1
+	//F1: Move to Map 1 -----------------------------------
 	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN){
 		App->MMap->switch_map(0);
 		velocity = 5.0f;
@@ -202,7 +209,10 @@ bool j1Player::Update(float dt)
 	
 	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
 
-	//End of map checking
+	App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
+
+
+	//End of map checking ---------------------------------
 	if (finishedMap1 == true)
 	{
 		App->MRender->Blit(map1_done_text, App->MPlayer->position.x, App->MPlayer->position.y, NULL, 0.0f);
@@ -237,6 +247,8 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER)
 	{
+		//Effect
+		App->MAudio->PlayFx(scream_fx);
 		SetPosOrigin();
 	}
 
