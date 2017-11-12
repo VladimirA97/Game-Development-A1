@@ -16,6 +16,7 @@ class j1Audio;
 class j1Scene;
 class j1Map;
 
+//class j1Enemy;
 class j1Player;
 class j1Colliders;
 class j1Movement;
@@ -81,6 +82,7 @@ private:
 
 public:
 	// Modules
+	/*j1Enemy*			MEnemy = NULL;*/
 	j1Window*			MWindow = NULL;
 	j1Input*			MInput = NULL;
 	j1Render*			MRender = NULL;

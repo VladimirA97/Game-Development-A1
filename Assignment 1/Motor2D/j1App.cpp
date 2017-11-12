@@ -8,6 +8,7 @@
 #include "j1Audio.h"
 #include "j1Scene.h"
 #include "j1Map.h"
+//#include "j1Enemy"
 #include "j1App.h"
 #include "j1Player.h"
 #include "j1Colliders.h"
@@ -20,6 +21,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	frames = 0;
 	want_to_save = want_to_load = false;
 
+	/*MEnemy = new j1Enemy();*/
 	MInput = new j1Input();
 	MWindow = new j1Window();
 	MRender = new j1Render();
@@ -32,6 +34,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	MColliders = new j1Colliders();
 	MMovement = new j1Movement();
 
+	/*AddModule(MEnemy);*/
 	AddModule(MInput);
 	AddModule(MWindow);
 	AddModule(MTextures);
