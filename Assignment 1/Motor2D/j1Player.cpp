@@ -250,6 +250,7 @@ void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER)
 	{
+		App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
 		//Effect
 		App->MAudio->PlayFx(scream_fx);
 		SetPosOrigin();
