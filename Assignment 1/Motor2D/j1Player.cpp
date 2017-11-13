@@ -144,52 +144,55 @@ bool j1Player::PreUpdate()
 bool j1Player::Update(float dt)
 {
 	//WASD Movement
-	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x <velocity){
-		player->acceleration.x = acc_x;
-		current_animation = &run_right;
-	}
-	if (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x >-velocity){
-		player->acceleration.x = -acc_x;
-		current_animation = &run_left;
-	}
-
-	if (player->velocity.x > velocity || player->velocity.x < -velocity){
-		player->acceleration.x = 0;
-	}
-
-	if ((App->MInput->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_IDLE)){
-		current_animation = &idle;
-		player->acceleration.x = -player->velocity.x;
-	}
-	if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT){
-		current_animation = &idle;
-		player->acceleration.x = -player->velocity.x;
-		player->velocity.x = 0;
-	}
-
-	if (App->MInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN && player->is_touching && player->velocity.y < 0.5){
-		current_animation = &idle;
-		player->velocity.y = -acc_y;
-		player->is_touching = false;
-		//Effect
-		App->MAudio->PlayFx(jump_fx);
-	}
-
-	if (player->is_touching == false)
+	if (finishedMap1 == false || !finishedMap2 == false)
 	{
-		if (player->velocity.y < 0)
+		if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && player->velocity.x < velocity) {
+			player->acceleration.x = acc_x;
+			current_animation = &run_right;
+		}
+		if (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x > -velocity) {
+			player->acceleration.x = -acc_x;
+			current_animation = &run_left;
+		}
+
+		if (player->velocity.x > velocity || player->velocity.x < -velocity) {
+			player->acceleration.x = 0;
+		}
+
+		if ((App->MInput->GetKey(SDL_SCANCODE_D) == KEY_IDLE) && (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_IDLE)) {
+			current_animation = &idle;
+			player->acceleration.x = -player->velocity.x;
+		}
+		if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			current_animation = &idle;
+			player->acceleration.x = -player->velocity.x;
+			player->velocity.x = 0;
+		}
+
+		if (App->MInput->GetKey(SDL_SCANCODE_W) == KEY_DOWN && player->is_touching && player->velocity.y < 0.5) {
+			current_animation = &idle;
+			player->velocity.y = -acc_y;
+			player->is_touching = false;
+			//Effect
+			App->MAudio->PlayFx(jump_fx);
+		}
+
+		if (player->is_touching == false)
 		{
-			if (player->velocity.x < 0){
-				current_animation = &jump_left;
-			}
-			if (player->velocity.x > 0){
-				current_animation = &jump_right;
+			if (player->velocity.y < 0)
+			{
+				if (player->velocity.x < 0) {
+					current_animation = &jump_left;
+				}
+				if (player->velocity.x > 0) {
+					current_animation = &jump_right;
+				}
 			}
 		}
-	}
 
-	if (App->MInput->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		player->velocity.y = +5.0; //stack to the floor
+		if (App->MInput->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			player->velocity.y = +5.0; //stack to the floor
+		}
 	}
 
 	//F1: Move to Map 1 -----------------------------------
