@@ -87,8 +87,8 @@ bool j1Scene::Update(float dt)
 	App->MRender->Blit(background_text, App->MRender->camera.x - 500, App->MRender->camera.y, &background_rect, 0.01f);
 	App->MMap->Draw();
 
-	p2SString title("Escape");
-	App->MWindow->SetTitle(title.GetString());
+	//p2SString title("Escape");
+	//App->MWindow->SetTitle(title.GetString());
 
 	return true;
 }

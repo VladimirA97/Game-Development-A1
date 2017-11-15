@@ -19,13 +19,13 @@ void j1Timer::Start()
 }
 
 // ---------------------------------------------
-float j1Timer::ReadSec() const
+uint32 j1Timer::Read() const
 {
-	return float((SDL_GetTicks() - started_at)/1000.0f);
+	return SDL_GetTicks() - started_at;
 }
 
 // ---------------------------------------------
-uint32 j1Timer::ReadTicks() const
+float j1Timer::ReadSec() const
 {
-	return SDL_GetTicks() - started_at;
+	return float(SDL_GetTicks() - started_at) / 1000.0f;
 }

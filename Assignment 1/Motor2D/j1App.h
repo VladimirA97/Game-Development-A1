@@ -98,8 +98,7 @@ public:
 private:
 
 	p2List<j1Module*>	modules;
-	uint				frames;
-	float				dt;
+	float               dt;
 	int					argc;
 	char**				args;
 
@@ -112,12 +111,11 @@ private:
 	mutable p2SString	save_game;
 
 	//Time vars
-	j1PerfTimer         ptimer;
+	j1PerfTimer			ptimer;
+	uint64				frame_count = 0;
 	j1Timer				startup_time;
 	j1Timer				frame_time;
 	j1Timer				last_sec_frame_time;
-
-	uint64				frame_count = 0;
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 };

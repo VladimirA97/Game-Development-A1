@@ -12,9 +12,7 @@ uint64 j1PerfTimer::frequency = 0;
 j1PerfTimer::j1PerfTimer()
 {
 	if (frequency == 0)
-	{
 		frequency = SDL_GetPerformanceFrequency();
-	}
 
 	Start();
 }
@@ -34,5 +32,5 @@ double j1PerfTimer::ReadMs() const
 // ---------------------------------------------
 uint64 j1PerfTimer::ReadTicks() const
 {
-	return 0;
+	return SDL_GetPerformanceCounter() - started_at;
 }

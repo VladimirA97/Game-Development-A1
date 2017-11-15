@@ -11,7 +11,7 @@ public:
 	j1Timer();
 
 	void Start();
-	uint32 ReadTicks() const;
+	uint32 Read() const;
 	float ReadSec() const;
 
 private:
