@@ -5,7 +5,7 @@
 #include "j1Render.h"
 #include "j1Colliders.h"
 #include "j1Map.h"
-#include "Enemy.h"
+#include "j1Entities.h"
 #include "j1Player.h"
 #include "j1Audio.h"
 #include "j1Movement.h"
