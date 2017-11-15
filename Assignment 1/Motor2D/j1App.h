@@ -90,17 +90,20 @@ public:
 	j1Audio*			MAudio = NULL;
 	j1Scene*			MScene = NULL;
 	j1Map*				MMap = NULL;
-
 	j1Player*			MPlayer = NULL;
 	j1Colliders*		MColliders = NULL;
 	j1Movement*			MMovement = NULL;
 
+	bool				cap_frames = false;
+
 private:
 
 	p2List<j1Module*>	modules;
-	float               dt;
 	int					argc;
 	char**				args;
+
+	uint			    framerate_cap;
+	float               diferentialTime;
 
 	p2SString			title;
 	p2SString			organization;
@@ -118,6 +121,7 @@ private:
 	j1Timer				last_sec_frame_time;
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
+
 };
 
 extern j1App* App;

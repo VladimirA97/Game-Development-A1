@@ -93,7 +93,6 @@ j1Player::~j1Player()
 bool j1Player::Start()
 {
 	LOG("Loading player");
-	//create object
 
 	SDL_Rect rect;
 	rect.x = original_x;
@@ -150,6 +149,7 @@ bool j1Player::Update(float dt)
 			player->acceleration.x = acc_x;
 			current_animation = &run_right;
 		}
+
 		if (App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && player->velocity.x > -velocity) {
 			player->acceleration.x = -acc_x;
 			current_animation = &run_left;
@@ -163,6 +163,7 @@ bool j1Player::Update(float dt)
 			current_animation = &idle;
 			player->acceleration.x = -player->velocity.x;
 		}
+
 		if (App->MInput->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && App->MInput->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			current_animation = &idle;
 			player->acceleration.x = -player->velocity.x;
@@ -190,12 +191,13 @@ bool j1Player::Update(float dt)
 			}
 		}
 
+		//Stack to the floor
 		if (App->MInput->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-			player->velocity.y = +5.0; //stack to the floor
+			player->velocity.y = +5.0;
 		}
 	}
 
-	//F1: Move to Map 1 -----------------------------------
+	//F1: Move to Map 1 ----------------------------------
 	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN){
 		App->MMap->switch_map(0);
 		velocity = 5.0f;
@@ -211,9 +213,7 @@ bool j1Player::Update(float dt)
 	}
 	
 	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
-
 	App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
-
 
 	//End of map checking ---------------------------------
 	if (finishedMap1 == true)

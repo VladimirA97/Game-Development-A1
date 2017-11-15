@@ -40,6 +40,9 @@ bool j1Scene::Start()
 
 	App->MMap->Load(App->MMap->maps[App->MMap->id_map].GetString());
 
+	//Reset position when traversing map
+	App->MColliders->AddCollider({0, 700, 3000, 10}, COLLIDER_WATER);
+
 	if (App->MMap->id_map == 0)
 	{
 		App->MAudio->PlayMusic("audio/music/First Map.ogg");

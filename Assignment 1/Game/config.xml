@@ -1,13 +1,13 @@
 <!-- Config file for the game -->
 
 <config>
-  <app>
+   <app framerate_cap="60">
     <title>Escape</title>
     <organization>UPC</organization>
   </app>
 	
   <renderer>
-    <vsync value="true"/>
+    <vsync value="false"/>
     <camera camera_x="100" camera_y="0"/>
   </renderer>
 

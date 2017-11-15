@@ -31,7 +31,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	MScene = new j1Scene();
 	MMap = new j1Map();
 	MPlayer = new j1Player();
-
 	MColliders = new j1Colliders();
 	MMovement = new j1Movement();
 
@@ -89,7 +88,11 @@ bool j1App::Awake()
 		app_config = config.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
+
+		framerate_cap = app_config.attribute("framerate_cap").as_uint();
+		LOG("Framerate %d", framerate_cap);
 	}
+
 	save_game = "save_game.xml";
 	load_game = "save_game.xml";
 
@@ -123,6 +126,7 @@ bool j1App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
+	startup_time.Start();
 
 	PERF_PEEK(ptimer);
 	return ret;
@@ -173,7 +177,11 @@ void j1App::PrepareUpdate()
 	frame_count++;
 	last_sec_frame_count++;
 
+	// Calculate the dt: differential time since last frame
+	diferentialTime = frame_time.ReadSec();
+	LOG("Delta time %f", diferentialTime);
 	frame_time.Start();
+	ptimer.Start();
 }
 
 // ---------------------------------------------
@@ -185,6 +193,7 @@ void j1App::FinishUpdate()
 	if(want_to_load == true)
 		LoadGameNow();
 
+	//Framerate calculations
 	if (last_sec_frame_time.Read() > 1000)
 	{
 		last_sec_frame_time.Start();
@@ -198,9 +207,21 @@ void j1App::FinishUpdate()
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
 	static char title[256];
-	sprintf_s(title, 256, "Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i  Time since startup: %.3f Frame Count: %lu ",
-		      avg_fps, last_frame_ms, frames_on_last_update, seconds_since_startup, frame_count);
+	sprintf_s(title, 256, "Escape | Av.FPS: %.2f Last sec frames: %i Frame cap: ON", avg_fps, frames_on_last_update);
 	App->MWindow->SetTitle(title);
+
+	//SDL_Delay to make sure framerate is capped 
+	uint32 framerate = 1000 / framerate_cap;
+	uint32 delay = framerate - ptimer.ReadMs();
+	float realTime;
+
+	//Measure accurately the amount of time it SDL_Delay actually waits compared to what was expected
+	if (ptimer.ReadMs() < framerate)
+	{
+		SDL_Delay(delay);
+		realTime = ptimer.ReadMs();
+		LOG("We waited for %d milliseconds and got back in %f", delay, realTime);
+	}
 }
 
 // Call modules before each loop iteration
@@ -241,7 +262,7 @@ bool j1App::DoUpdate()
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = item->data->Update(diferentialTime);
 	}
 
 	return ret;

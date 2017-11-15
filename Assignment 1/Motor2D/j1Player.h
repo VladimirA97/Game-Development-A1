@@ -23,7 +23,7 @@ public:
 	void OnCollision(Collider* c1, Collider* c2);
 	bool Awake(pugi::xml_node& config);
 
-	void SetPosOrigin();// sets player to the start of the map
+	void SetPosOrigin();
 
 	bool Save(pugi::xml_node&) const;
 	bool Load(pugi::xml_node&);
