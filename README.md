@@ -16,9 +16,11 @@ Decompress the .zip file in any directory and execute the executable inside the 
 - Spacebar: Apply extra gravity to the floor, the player will fall faster.
 
 ### Special features
+- F1: Switch to map 1.
 - F2: Reset the character in the original start point.
 - F5: Save the current character position.
 - F6: Load the last saved situation.
+- F11: Switch to map 2.
 
 ## Credits
 - Vladimir Agache ([Github](https://github.com/VladimirA97))
