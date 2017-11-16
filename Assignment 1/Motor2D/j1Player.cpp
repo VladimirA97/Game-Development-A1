@@ -196,6 +196,13 @@ bool j1Player::Update(float dt)
 			player->velocity.y = +5.0;
 		}
 	}
+	//F10: Switch to God mode  ---------------------------
+	/*if (App->MInput->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		godmode = true;
+
+
+
+	}*/
 
 	//F1: Move to Map 1 ----------------------------------
 	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN){
@@ -214,7 +221,7 @@ bool j1Player::Update(float dt)
 	
 	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
 	App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
-
+	
 	//End of map checking ---------------------------------
 	if (finishedMap1 == true)
 	{

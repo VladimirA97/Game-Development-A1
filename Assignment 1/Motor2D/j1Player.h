@@ -42,6 +42,7 @@ public:
 
 	SDL_Texture* map2_done_text = nullptr;
 	bool finishedMap2 = false;
+	bool beforeMap1 = true;
 
 	SDL_Texture* dark_text = nullptr;
 
@@ -70,5 +71,7 @@ public:
 public:
 	uint jump_fx;
 	uint scream_fx;
+private:
+	/*bool godmode = false;*/
 };
 #endif

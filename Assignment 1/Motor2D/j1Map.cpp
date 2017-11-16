@@ -405,6 +405,9 @@ bool j1Map::CreateColliders(MapLayer* layer)
 {
 	int j = 0;
 
+	data.colliders[j] = App->MColliders->AddCollider({ 0, 700, 3000, 10 }, COLLIDER_WATER);
+	j++;
+
 	for (int _y = 0; _y < layer->height; ++_y)
 	{
 		for (int _x = 0; _x < layer->width; ++_x)
