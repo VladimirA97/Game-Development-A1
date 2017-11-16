@@ -50,7 +50,7 @@ j1Player::j1Player()
 	run_left.loop = true;
 
 	//Animation jumps_right;
-	jump_right.PushBack({ 0, 64, 53, 64 });
+	jump_right.PushBack({ 318, 64, 53, 64 });
 	//jump_right.PushBack({ 53, 64, 53, 64 });
 	//jump_right.PushBack({ 106, 64, 53, 64 });
 	//jump_right.PushBack({ 159, 64, 53, 64 });
@@ -61,7 +61,7 @@ j1Player::j1Player()
 	jump_right.loop = false;
 
 	//Animation jump_left;
-	jump_left.PushBack({ 0, 192, 53, 64 });
+	jump_left.PushBack({ 318, 128, 53, 64 });
 	//jump_left.PushBack({ 53, 192, 53, 64 });
 	//jump_left.PushBack({ 106, 192, 53, 64 });
 	//jump_left.PushBack({ 159, 192, 53, 64 });
