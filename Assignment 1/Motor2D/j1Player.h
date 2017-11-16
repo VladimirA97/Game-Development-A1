@@ -72,6 +72,6 @@ public:
 	uint jump_fx;
 	uint scream_fx;
 private:
-	/*bool godmode = false;*/
+	bool godmode = false;
 };
 #endif

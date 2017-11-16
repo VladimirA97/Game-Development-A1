@@ -197,12 +197,21 @@ bool j1Player::Update(float dt)
 		}
 	}
 	//F10: Switch to God mode  ---------------------------
-	/*if (App->MInput->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		godmode = true;
-
-
-
-	}*/
+	if (App->MInput->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		switch (godmode)
+		{
+		case true:
+			godmode = false;
+			break;
+		case false:
+			godmode = true;
+			break;
+		default:
+			godmode = false;
+			break;
+		}
+	}
+			
 
 	//F1: Move to Map 1 ----------------------------------
 	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN){
@@ -255,7 +264,7 @@ bool j1Player::Update(float dt)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER)
+	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER && godmode == false)
 	{
 		App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
 		//Effect

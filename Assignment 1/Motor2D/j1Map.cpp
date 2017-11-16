@@ -405,7 +405,9 @@ bool j1Map::CreateColliders(MapLayer* layer)
 {
 	int j = 0;
 
-	data.colliders[j] = App->MColliders->AddCollider({ 0, 700, 3000, 10 }, COLLIDER_WATER);
+	data.colliders[j] = App->MColliders->AddCollider({ 0, 700, 3000, 1 }, COLLIDER_WATER);
+	j++;
+	data.colliders[j] = App->MColliders->AddCollider({ 0, 701, 3000, 1 }, COLLIDER_WALL);
 	j++;
 
 	for (int _y = 0; _y < layer->height; ++_y)
