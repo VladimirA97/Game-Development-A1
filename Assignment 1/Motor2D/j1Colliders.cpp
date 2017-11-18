@@ -17,32 +17,31 @@ j1Colliders::j1Colliders()
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PREVENT] = true;
 	matrix[COLLIDER_WALL][COLLIDER_NEXT_MAP] = false;
-	matrix[COLLIDER_WALL][COLLIDER_WATER] = false;
+	matrix[COLLIDER_WALL][COLLIDER_SPIKE] = false;
 
 	matrix[COLLIDER_PLAYER][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PLAYER][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_PREVENT] = false;
 	matrix[COLLIDER_PLAYER][COLLIDER_NEXT_MAP] = true;
-	matrix[COLLIDER_PLAYER][COLLIDER_WATER] = true;
+	matrix[COLLIDER_PLAYER][COLLIDER_SPIKE] = true;
 
 	matrix[COLLIDER_PREVENT][COLLIDER_PREVENT] = false;
 	matrix[COLLIDER_PREVENT][COLLIDER_WALL] = true;
 	matrix[COLLIDER_PREVENT][COLLIDER_PLAYER] = false;
 	matrix[COLLIDER_PREVENT][COLLIDER_NEXT_MAP] = false;
-	matrix[COLLIDER_PREVENT][COLLIDER_WATER] = false;
+	matrix[COLLIDER_PREVENT][COLLIDER_SPIKE] = false;
 
 	matrix[COLLIDER_NEXT_MAP][COLLIDER_PREVENT] = false;
 	matrix[COLLIDER_NEXT_MAP][COLLIDER_WALL] = false;
 	matrix[COLLIDER_NEXT_MAP][COLLIDER_PLAYER] = true;
 	matrix[COLLIDER_NEXT_MAP][COLLIDER_NEXT_MAP] = false;
-	matrix[COLLIDER_NEXT_MAP][COLLIDER_WATER] = false;
+	matrix[COLLIDER_NEXT_MAP][COLLIDER_SPIKE] = false;
 
-	matrix[COLLIDER_WATER][COLLIDER_PREVENT] = false;
-	matrix[COLLIDER_WATER][COLLIDER_WALL] = false;
-	matrix[COLLIDER_WATER][COLLIDER_PLAYER] = true;
-	matrix[COLLIDER_WATER][COLLIDER_NEXT_MAP] = false;
-
-	matrix[COLLIDER_WATER][COLLIDER_WATER] = false;
+	matrix[COLLIDER_SPIKE][COLLIDER_PREVENT] = false;
+	matrix[COLLIDER_SPIKE][COLLIDER_WALL] = false;
+	matrix[COLLIDER_SPIKE][COLLIDER_PLAYER] = true;
+	matrix[COLLIDER_SPIKE][COLLIDER_NEXT_MAP] = false;
+	matrix[COLLIDER_SPIKE][COLLIDER_SPIKE] = false;
 }
 
 j1Colliders::~j1Colliders()
@@ -147,14 +146,14 @@ void j1Colliders::DebugDraw()
 		case COLLIDER_PLAYER:
 			App->MRender->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha); //Green
 			break;
-		case COLLIDER_WATER:
+		case COLLIDER_SPIKE:
 			App->MRender->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha); //Red
 			break;
 		case COLLIDER_PREVENT:
-			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, 0);
 			break;
 		case COLLIDER_NEXT_MAP:
-			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			App->MRender->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha); // Yellow
 			break;
 		}
 	}

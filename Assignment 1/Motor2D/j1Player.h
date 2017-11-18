@@ -42,7 +42,7 @@ public:
 
 	SDL_Texture* map2_done_text = nullptr;
 	bool finishedMap2 = false;
-	bool beforeMap1 = true;
+	//bool beforeMap1 = true;
 
 	SDL_Texture* dark_text = nullptr;
 

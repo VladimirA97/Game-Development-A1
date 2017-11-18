@@ -179,7 +179,7 @@ void j1App::PrepareUpdate()
 
 	// Calculate the dt: differential time since last frame
 	diferentialTime = frame_time.ReadSec();
-	LOG("Delta time %f", diferentialTime);
+	//LOG("Delta time %f", diferentialTime);
 	frame_time.Start();
 	ptimer.Start();
 }
@@ -220,7 +220,7 @@ void j1App::FinishUpdate()
 	{
 		SDL_Delay(delay);
 		realTime = ptimer.ReadMs();
-		LOG("We waited for %d milliseconds and got back in %f", delay, realTime);
+		//LOG("We waited for %d milliseconds and got back in %f", delay, realTime);
 	}
 }
 

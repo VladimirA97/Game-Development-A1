@@ -39,10 +39,7 @@ bool j1Scene::Start()
 	App->MAudio->Enable();
 
 	App->MMap->Load(App->MMap->maps[App->MMap->id_map].GetString());
-
-	//Reset position when traversing map
 	
-
 	if (App->MMap->id_map == 0)
 	{
 		App->MAudio->PlayMusic("audio/music/First Map.ogg");
@@ -87,7 +84,7 @@ bool j1Scene::Update(float dt)
 	if (App->MInput->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		App->LoadGame();
 	
-	App->MRender->Blit(background_text, App->MRender->camera.x - 500, App->MRender->camera.y, &background_rect, 0.01f);
+	App->MRender->Blit(background_text, App->MRender->camera.x - 500, App->MRender->camera.y, &background_rect, 0.05f);
 	App->MMap->Draw();
 
 	//p2SString title("Escape");
@@ -103,10 +100,10 @@ bool j1Scene::PostUpdate()
 
 	if (App->MInput->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
+		App->MScene->CleanUp();
 		exit(0);
+		//ret = false;
 	}
-		/*ret = false;*/
-
 	return ret;
 }
 

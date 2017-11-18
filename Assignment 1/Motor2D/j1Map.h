@@ -113,5 +113,12 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			path;
 	bool				map_loaded;
+
+public:
+	SDL_Texture* map1_done_text = nullptr;
+	bool finishedMap1 = false;
+
+	SDL_Texture* map2_done_text = nullptr;
+	bool finishedMap2 = false;
 };
 #endif

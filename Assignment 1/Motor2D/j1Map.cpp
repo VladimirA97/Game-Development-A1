@@ -121,6 +121,16 @@ bool j1Map::CleanUp()
 	}
 	data.tilesets.clear();
  
+	//Remove colliders
+	for (int i = 0; i < MAX_COLLIDERS; ++i)
+	{
+		if (data.colliders[i] != nullptr)
+		{
+			data.colliders[i]->to_delete = true;
+			data.colliders[i] = nullptr;
+		}
+	}
+
     //Remove all layers
 	p2List_item<MapLayer*>* item2;
 	item2 = data.layers.start;
@@ -131,15 +141,6 @@ bool j1Map::CleanUp()
 		item2 = item2->next;
 	}
 	data.layers.clear();
-
-	for (int i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (data.colliders[i] != nullptr)
-		{
-			data.colliders[i]->to_delete = true;
-			data.colliders[i] = nullptr;
-		}
-	}
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -405,10 +406,11 @@ bool j1Map::CreateColliders(MapLayer* layer)
 {
 	int j = 0;
 
-	data.colliders[j] = App->MColliders->AddCollider({ 0, 700, 3000, 5 }, COLLIDER_WALL);
-	j++;
-	data.colliders[j] = App->MColliders->AddCollider({ 0, 705, 3000, 5 }, COLLIDER_WATER);
-	j++;
+	//Top
+	data.colliders[j] = App->MColliders->AddCollider({ 0, -5, 3000, 5 }, COLLIDER_SPIKE); j++;
+	//Bottom
+	data.colliders[j] = App->MColliders->AddCollider({ 0, 700, 3000, 5 }, COLLIDER_WALL); j++;
+	data.colliders[j] = App->MColliders->AddCollider({ 0, 705, 3000, 5 }, COLLIDER_SPIKE);j++;
 
 	for (int _y = 0; _y < layer->height; ++_y)
 	{
@@ -440,7 +442,7 @@ bool j1Map::CreateColliders(MapLayer* layer)
 				break;
 			case 16:
 				if (data.colliders[j] == nullptr)
-					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_WATER);
+					data.colliders[j] = App->MColliders->AddCollider(rect, COLLIDER_SPIKE);
 				j++;
 				break;
 			default:

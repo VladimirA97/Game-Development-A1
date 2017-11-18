@@ -8,6 +8,7 @@
 #include "j1Player.h"
 #include "j1Audio.h"
 #include "j1Movement.h"
+#include "j1Scene.h"
 #include "SDL/include/SDL_timer.h"
 
 #include <stdio.h>
@@ -211,8 +212,12 @@ bool j1Player::Update(float dt)
 			break;
 		}
 	}
-			
 
+	if (godmode == false)
+	{
+		App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
+	}
+			
 	//F1: Move to Map 1 ----------------------------------
 	if (App->MInput->GetKey(SDL_SCANCODE_F1) == KEY_DOWN){
 		App->MMap->switch_map(0);
@@ -229,7 +234,6 @@ bool j1Player::Update(float dt)
 	}
 	
 	App->MRender->Blit(player_graphics, (int)player->position.x - 10, (int)player->position.y, &(current_animation->GetCurrentFrame()));
-	App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
 	
 	//End of map checking ---------------------------------
 	if (finishedMap1 == true)
@@ -254,6 +258,7 @@ bool j1Player::Update(float dt)
 		}
 		else if (App->MInput->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
+			App->MScene->CleanUp();
 			exit(0);
 		}
 		App->MPlayer->finishedMap2 = false;
@@ -264,7 +269,7 @@ bool j1Player::Update(float dt)
 
 void j1Player::OnCollision(Collider* c1, Collider* c2)
 {
-	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_WATER && godmode == false)
+	if (c1->clld_type == COLLIDER_PLAYER && c2->clld_type == COLLIDER_SPIKE && godmode == false)
 	{
 		App->MRender->Blit(dark_text, (int)player->position.x - 1137, (int)player->position.y - 938);
 		//Effect
