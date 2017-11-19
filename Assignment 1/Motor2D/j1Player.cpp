@@ -267,6 +267,11 @@ bool j1Player::Update(float dt)
 		App->MPlayer->finishedMap2 = false;
 	}
 
+	if (position.y == 665)
+	{
+		SetPosOrigin();
+	}
+
 	return true;
 }
 

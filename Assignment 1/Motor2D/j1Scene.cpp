@@ -103,9 +103,9 @@ bool j1Scene::PostUpdate()
 
 	if (App->MInput->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		App->MScene->CleanUp();
-		exit(0);
-		//ret = false;
+		/*App->MScene->CleanUp();
+		exit(0);*/
+		ret = false;
 	}
 	return ret;
 }
