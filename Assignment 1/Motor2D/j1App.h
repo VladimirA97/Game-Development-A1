@@ -56,6 +56,9 @@ public:
 	void SaveGame() const;
 	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
 
+	uint GetFramerate() const;
+	void SetFramerate(uint frame_cap);
+
 private:
 
 	// Load config file
@@ -122,6 +125,8 @@ private:
 	uint32				last_sec_frame_count = 0;
 	uint32				prev_last_sec_frame_count = 0;
 
+	char*               cap;
+	bool                is_capped = false;
 };
 
 extern j1App* App;

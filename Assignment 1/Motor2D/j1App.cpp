@@ -206,8 +206,32 @@ void j1App::FinishUpdate()
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
+	if (is_capped == false)
+	{
+		cap = "OFF";
+	}
+	else
+	{
+		cap = "ON";
+	}
+
+	if (App->MInput->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (GetFramerate() == 60)
+		{
+			SetFramerate(30);
+			is_capped = true;
+
+		}
+		else
+		{
+			SetFramerate(60);
+			is_capped = false;
+		}
+	}
+
 	static char title[256];
-	sprintf_s(title, 256, "Escape | Av.FPS: %.2f Last sec frames: %i Frame cap: ON", avg_fps, frames_on_last_update);
+	sprintf_s(title, 256, "Escape | FPS: %i | Av.FPS: %.2f | Last Frame Ms: %02u | Frame cap: %s", framerate_cap, avg_fps, last_frame_ms, cap);
 	App->MWindow->SetTitle(title);
 
 	//SDL_Delay to make sure framerate is capped 
@@ -426,4 +450,14 @@ bool j1App::SavegameNow() const
 	data.reset();
 	want_to_save = false;
 	return ret;
+}
+
+uint j1App::GetFramerate() const
+{
+	return framerate_cap;
+}
+
+void j1App::SetFramerate(uint frame_cap)
+{
+	framerate_cap = frame_cap;
 }

@@ -119,7 +119,7 @@ bool j1Colliders::PostUpdate()
 
 void j1Colliders::DebugDraw()
 {
-	if (App->MInput->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	if (App->MInput->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		debug = !debug;
 	}
