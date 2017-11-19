@@ -9,18 +9,29 @@ And the [repository link](https://github.com/VladimirA97/Game-Development-A1) he
 Decompress the .zip file in any directory and execute the executable inside the decompressed folder.
 
 ## Functionalities
-- The game hasn't achieved its standart point because of some lacks; second stage does not load because of colliders issues, animations struggle is some sense points and special features aren't able because of the first topic.
+- Two different levels.
+- Background with parallax.
+- Logic is made around Tiled layers.
+- Load and reset maps with debug keys.
+- Save and load debug functions.
+- God mode.
+- Framerate capping.
+- Profiler included (using Brofiler).
 
 ## Usage (keyborad)
-- WASD: Move the character; run and jump in both senses.
+- W: Jump
+- A/D: Move left or right.
+- AW/DW: Jump to the left or to the right.
 - Spacebar: Apply extra gravity to the floor, the player will fall faster.
 
-### Special features
+### Debug features
 - F1: Switch to map 1.
-- F2: Reset the character in the original start point.
+- F2: Reset the character in the original start point (both maps).
+- F3: Switch to map 2.
 - F5: Save the current character position.
 - F6: Load the last saved situation.
-- F11: Switch to map 2.
+- F9: Show colliders.
+- F11: De/Activate framerate cap to 30/60fps. 
 
 ## Credits
 - Vladimir Agache ([Github](https://github.com/VladimirA97))
