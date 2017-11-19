@@ -44,8 +44,6 @@ bool j1Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->MWindow->screen_surface->w;
 		camera.h = App->MWindow->screen_surface->h;
-		/*camera.x = config.child("camera").attribute("camera_x").as_int();
-		camera.y = config.child("camera").attribute("camera_y").as_int();*/
 		camera.x = 0;
 		camera.y = 0;
 	}

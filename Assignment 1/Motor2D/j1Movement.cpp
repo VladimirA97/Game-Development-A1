@@ -2,6 +2,7 @@
 #include "j1Colliders.h"
 #include "j1App.h"
 #include "p2Log.h"
+#include "Brofiler/Brofiler.h"
 
 j1Movement::j1Movement()
 {
@@ -83,6 +84,8 @@ bool j1Movement::PreUpdate()
 
 bool j1Movement::Update(float dt)
 {
+	BROFILER_CATEGORY("Movement_Update", Profiler::Color::Yellow);
+
 	for (uint i = 0; i < MAX_OBJECTS; ++i)
 	{
 		if (bodies[i] != nullptr)

@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "Brofiler/Brofiler.h"
 
 j1Colliders::j1Colliders()
 {
@@ -71,6 +72,8 @@ bool j1Colliders::PreUpdate()
 // Called before render is available
 bool j1Colliders::Update(float dt)
 {
+	BROFILER_CATEGORY("Colliders_Update", Profiler::Color::Purple);
+
 	Collider* c1;
 	Collider* c2;
 

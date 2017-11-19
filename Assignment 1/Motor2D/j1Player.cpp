@@ -10,6 +10,7 @@
 #include "j1Movement.h"
 #include "j1Scene.h"
 #include "SDL/include/SDL_timer.h"
+#include "Brofiler/Brofiler.h"
 
 #include <stdio.h>
 
@@ -143,6 +144,8 @@ bool j1Player::PreUpdate()
 
 bool j1Player::Update(float dt)
 {
+	BROFILER_CATEGORY("Player_Update", Profiler::Color::Green);
+
 	//WASD Movement
 	if (finishedMap1 == false || !finishedMap2 == false)
 	{
