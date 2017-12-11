@@ -4,6 +4,9 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
+class GuiImage;
+class GuiText;
+struct _TTF_Font;
 
 class j1Scene : public j1Module
 {
@@ -38,6 +41,23 @@ public:
 
 	bool lost = false;
 
+//---------------------------------------------------------------------
+private:
+	SDL_Texture* debug_tex = nullptr;
+	GuiImage* banner;
+	GuiText* text;
+
+	SDL_Rect atlasRect;
+	SDL_Rect hoverButton;
+	SDL_Rect clickButton;
+	SDL_Rect normalButton;
+
+	SDL_Texture* background = nullptr;
+	SDL_Texture* upper = nullptr;
+
+	//Wow
+	SDL_Texture* greyButtonWOW = nullptr;
+	SDL_Texture* redButtonWOW = nullptr;
 };
 
 #endif // __j1SCENE_H__

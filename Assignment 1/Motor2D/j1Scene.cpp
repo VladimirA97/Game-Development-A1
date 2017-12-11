@@ -10,6 +10,8 @@
 #include "j1Scene.h"
 #include "j1Player.h"
 #include "j1Movement.h"
+#include "j1Fonts.h"
+#include "j1Gui.h"
 #include "Brofiler/Brofiler.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -52,6 +54,19 @@ bool j1Scene::Start()
 
 	background_text = App->MTextures->Load("maps/BG1.png");
 
+//---------------------------------------------------------------------
+	//debug_tex = App->MTextures->Load("maps/path2.png");
+	//background = App->MTextures->Load("textures/Homework/wow ui/login_background720.png");
+	//upper = App->MTextures->Load("textures/Homework/wow ui/login_upper.png");
+	//greyButtonWOW = App->MTextures->Load("textures/Homework/wow ui/BUTTONS/UI-DialogBox-Button-Disabled.png");
+	//redButtonWOW = App->MTextures->Load("textures/Homework/wow ui/BUTTONS/UI-DialogBox-Button-Down.png");
+
+	//// Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
+	//atlasRect = { 485, 829, 328, 103 };
+	//hoverButton = { 0, 113, 229, 69 };
+	//clickButton = { 411, 169, 229, 69 };
+	//normalButton = { 642, 169, 229, 69 };
+
 	return true;
 }
 
@@ -93,6 +108,34 @@ bool j1Scene::Update(float dt)
 	//p2SString title("Escape");
 	//App->MWindow->SetTitle(title.GetString());
 
+//---------------------------------------------------------------------
+
+	////Background
+	////App->gui->PrintBackground(background, 0, 0);
+	////App->gui->PrintBackground(upper, 0, 0); 
+
+	////Gui ---
+	////Top image
+	//App->MGui->PrintIcon(App->MGui->GetAtlas(), true, 0, 25, 620, 5, &atlasRect, "Hello", { 255, 140, 0, 100 });
+
+	//App->MGui->PrintIcon(App->MGui->GetAtlas(), true, 0, 250, 620, 250, &normalButton, "Dark", { 255, 140, 0, 100 });
+	//App->MGui->PrintIcon(App->MGui->GetAtlas(), true, 0, 450, 620, 450, &clickButton, "Bright", { 255, 140, 0, 100 });
+	//App->MGui->PrintIcon(App->MGui->GetAtlas(), true, 0, 650, 620, 650, &hoverButton, "Normal", { 255, 140, 0, 100 });
+
+	////Wow
+	////App->gui->PrintIcon(greyButton, false, 585, 345, 600, 345, NULL, "Account Name", { 255, 140, 0, 100 });
+	////App->gui->PrintIcon(greyButton, false, 585, 435, 590, 435, NULL, "Account Password", { 255, 140, 0, 100 });
+	////App->gui->PrintIcon(redButton, false, 585, 495, 635, 495, NULL, "Login", { 255, 140, 0, 100 });
+
+	//if (App->MInput->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	//{
+	//	App->MGui->buttonChange = true;
+	//}
+	//else if (App->MInput->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	//{
+	//	App->MGui->buttonChange = false;
+	//}
+
 	return true;
 }
 
@@ -103,9 +146,9 @@ bool j1Scene::PostUpdate()
 
 	if (App->MInput->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		/*App->MScene->CleanUp();
-		exit(0);*/
-		ret = false;
+		App->MScene->CleanUp();
+		exit(0);
+		/*ret = false;*/
 	}
 	return ret;
 }

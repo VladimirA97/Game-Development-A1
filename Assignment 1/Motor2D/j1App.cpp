@@ -15,6 +15,8 @@
 #include "j1Player.h"
 #include "j1Colliders.h"
 #include "j1Movement.h"
+#include "j1Fonts.h"
+#include "j1Gui.h"
 #include "Brofiler/Brofiler.h"
 
 // Constructor
@@ -33,6 +35,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	MPlayer = new j1Player();
 	MColliders = new j1Colliders();
 	MMovement = new j1Movement();
+	MFont = new j1Fonts();
+	MGui = new j1Gui();
 
 	/*AddModule(MEnemy);*/
 	AddModule(MInput);
@@ -45,6 +49,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(MPlayer);
 	AddModule(MMovement);
 	AddModule(MRender);
+	AddModule(MFont);
+	AddModule(MGui);
 }
 
 // Destructor

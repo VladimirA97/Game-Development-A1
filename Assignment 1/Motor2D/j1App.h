@@ -21,6 +21,9 @@ class j1Player;
 class j1Colliders;
 class j1Movement;
 
+class j1Fonts;
+class j1Gui;
+
 class j1App
 {
 public:
@@ -96,6 +99,8 @@ public:
 	j1Player*			MPlayer = NULL;
 	j1Colliders*		MColliders = NULL;
 	j1Movement*			MMovement = NULL;
+	j1Fonts*			MFont = NULL;
+	j1Gui*				MGui = NULL;
 
 	bool				cap_frames = false;
 

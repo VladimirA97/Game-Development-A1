@@ -49,11 +49,11 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="j1Entities.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,11 +126,11 @@
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="j1Entities.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,12 +154,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\XML files">
       <UniqueIdentifier>{7a0f0bba-277e-493c-a401-2ceabb2b5ee9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities">
-      <UniqueIdentifier>{aacbbdd6-d8d6-477a-8881-1bf4c978597c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Enemies">
-      <UniqueIdentifier>{f51cd425-4c9f-45f4-8f3b-513dffe8629c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
